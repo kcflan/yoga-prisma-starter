@@ -1,0 +1,12 @@
+dist
+node_modules
+resolvers/
+__TEST__/
+package-lock.json
+.idea
+.vscode
+*.log
+yarn.lock
+.env*
+*.bak
+.bak
