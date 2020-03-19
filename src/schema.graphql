@@ -1,8 +1,8 @@
 # create file —> src/schema.graphql (public facing) OUR API SCHEMA
 # a schema of mutations/queries that we want to use
 
-####changed import * from './generated/prisma.graphql'
-# import * from './schema_prep.graphql'
+# mport * from './schema_prep.graphql'
+#import * from './generated/prisma.graphql'
 type Mutation {
   createUser(name: String): User!
 }
