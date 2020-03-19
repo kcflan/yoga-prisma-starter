@@ -1,12 +1,5318 @@
-# create file —> src/schema.graphql (public facing) OUR API SCHEMA
-# a schema of mutations/queries that we want to use
+# type Query {
+#   feed: [Post!]!
+#   drafts: [Post!]!
+#   post(id: ID!): Post
+# }
 
-####changed import * from './generated/prisma.graphql'
-# import * from './schema_prep.graphql'
+# type Mutation {
+#   createDraft(title: String!, content: String): Post
+#   deletePost(id: ID!): Post
+#   publish(id: ID!): Post
+# }
+
+# type Post {
+#   id: ID!
+#   published: Boolean!
+#   title: String!
+#   content: String!
+# }
+
+type Access {
+  id: Int!
+  abbr: String
+  name: String
+  testAccess: Boolean
+}
+
+type AccessConnection {
+  pageInfo: PageInfo!
+  edges: [AccessEdge]!
+  aggregate: AggregateAccess!
+}
+
+input AccessCreateInput {
+  id: Int
+  abbr: String
+  name: String
+  testAccess: Boolean
+}
+
+type AccessEdge {
+  node: Access!
+  cursor: String!
+}
+
+enum AccessOrderByInput {
+  id_ASC
+  id_DESC
+  abbr_ASC
+  abbr_DESC
+  name_ASC
+  name_DESC
+  testAccess_ASC
+  testAccess_DESC
+}
+
+type AccessPreviousValues {
+  id: Int!
+  abbr: String
+  name: String
+  testAccess: Boolean
+}
+
+type AccessSubscriptionPayload {
+  mutation: MutationType!
+  node: Access
+  updatedFields: [String!]
+  previousValues: AccessPreviousValues
+}
+
+input AccessSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AccessWhereInput
+  AND: [AccessSubscriptionWhereInput!]
+  OR: [AccessSubscriptionWhereInput!]
+  NOT: [AccessSubscriptionWhereInput!]
+}
+
+input AccessUpdateInput {
+  abbr: String
+  name: String
+  testAccess: Boolean
+}
+
+input AccessUpdateManyMutationInput {
+  abbr: String
+  name: String
+  testAccess: Boolean
+}
+
+input AccessWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  abbr: String
+  abbr_not: String
+  abbr_in: [String!]
+  abbr_not_in: [String!]
+  abbr_lt: String
+  abbr_lte: String
+  abbr_gt: String
+  abbr_gte: String
+  abbr_contains: String
+  abbr_not_contains: String
+  abbr_starts_with: String
+  abbr_not_starts_with: String
+  abbr_ends_with: String
+  abbr_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  testAccess: Boolean
+  testAccess_not: Boolean
+  AND: [AccessWhereInput!]
+  OR: [AccessWhereInput!]
+  NOT: [AccessWhereInput!]
+}
+
+input AccessWhereUniqueInput {
+  id: Int
+}
+
+type Account {
+  id: Int!
+  accountOwner: User
+  acctNum: String
+  contactPrimary: Contact
+  contactSecondary: Int
+  fromLead: Lead
+  leadCreator: User
+  location: Location
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+type AccountConnection {
+  pageInfo: PageInfo!
+  edges: [AccountEdge]!
+  aggregate: AggregateAccount!
+}
+
+input AccountCreateInput {
+  id: Int
+  accountOwner: UserCreateOneInput
+  acctNum: String
+  contactPrimary: ContactCreateOneInput
+  contactSecondary: Int
+  fromLead: LeadCreateOneWithoutAccountsInput
+  leadCreator: UserCreateOneInput
+  location: LocationCreateOneWithoutAccountsInput
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountCreateManyWithoutFromLeadInput {
+  create: [AccountCreateWithoutFromLeadInput!]
+  connect: [AccountWhereUniqueInput!]
+}
+
+input AccountCreateManyWithoutLocationInput {
+  create: [AccountCreateWithoutLocationInput!]
+  connect: [AccountWhereUniqueInput!]
+}
+
+input AccountCreateWithoutFromLeadInput {
+  id: Int
+  accountOwner: UserCreateOneInput
+  acctNum: String
+  contactPrimary: ContactCreateOneInput
+  contactSecondary: Int
+  leadCreator: UserCreateOneInput
+  location: LocationCreateOneWithoutAccountsInput
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountCreateWithoutLocationInput {
+  id: Int
+  accountOwner: UserCreateOneInput
+  acctNum: String
+  contactPrimary: ContactCreateOneInput
+  contactSecondary: Int
+  fromLead: LeadCreateOneWithoutAccountsInput
+  leadCreator: UserCreateOneInput
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+type AccountEdge {
+  node: Account!
+  cursor: String!
+}
+
+enum AccountOrderByInput {
+  id_ASC
+  id_DESC
+  acctNum_ASC
+  acctNum_DESC
+  contactSecondary_ASC
+  contactSecondary_DESC
+  organizationName_ASC
+  organizationName_DESC
+  status_ASC
+  status_DESC
+  testAcct_ASC
+  testAcct_DESC
+  type_ASC
+  type_DESC
+}
+
+type AccountPreviousValues {
+  id: Int!
+  acctNum: String
+  contactSecondary: Int
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountScalarWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  acctNum: String
+  acctNum_not: String
+  acctNum_in: [String!]
+  acctNum_not_in: [String!]
+  acctNum_lt: String
+  acctNum_lte: String
+  acctNum_gt: String
+  acctNum_gte: String
+  acctNum_contains: String
+  acctNum_not_contains: String
+  acctNum_starts_with: String
+  acctNum_not_starts_with: String
+  acctNum_ends_with: String
+  acctNum_not_ends_with: String
+  contactSecondary: Int
+  contactSecondary_not: Int
+  contactSecondary_in: [Int!]
+  contactSecondary_not_in: [Int!]
+  contactSecondary_lt: Int
+  contactSecondary_lte: Int
+  contactSecondary_gt: Int
+  contactSecondary_gte: Int
+  organizationName: String
+  organizationName_not: String
+  organizationName_in: [String!]
+  organizationName_not_in: [String!]
+  organizationName_lt: String
+  organizationName_lte: String
+  organizationName_gt: String
+  organizationName_gte: String
+  organizationName_contains: String
+  organizationName_not_contains: String
+  organizationName_starts_with: String
+  organizationName_not_starts_with: String
+  organizationName_ends_with: String
+  organizationName_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  testAcct: Boolean
+  testAcct_not: Boolean
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  AND: [AccountScalarWhereInput!]
+  OR: [AccountScalarWhereInput!]
+  NOT: [AccountScalarWhereInput!]
+}
+
+type AccountSubscriptionPayload {
+  mutation: MutationType!
+  node: Account
+  updatedFields: [String!]
+  previousValues: AccountPreviousValues
+}
+
+input AccountSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AccountWhereInput
+  AND: [AccountSubscriptionWhereInput!]
+  OR: [AccountSubscriptionWhereInput!]
+  NOT: [AccountSubscriptionWhereInput!]
+}
+
+input AccountUpdateInput {
+  accountOwner: UserUpdateOneInput
+  acctNum: String
+  contactPrimary: ContactUpdateOneInput
+  contactSecondary: Int
+  fromLead: LeadUpdateOneWithoutAccountsInput
+  leadCreator: UserUpdateOneInput
+  location: LocationUpdateOneWithoutAccountsInput
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountUpdateManyDataInput {
+  acctNum: String
+  contactSecondary: Int
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountUpdateManyMutationInput {
+  acctNum: String
+  contactSecondary: Int
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountUpdateManyWithoutFromLeadInput {
+  create: [AccountCreateWithoutFromLeadInput!]
+  delete: [AccountWhereUniqueInput!]
+  connect: [AccountWhereUniqueInput!]
+  set: [AccountWhereUniqueInput!]
+  disconnect: [AccountWhereUniqueInput!]
+  update: [AccountUpdateWithWhereUniqueWithoutFromLeadInput!]
+  upsert: [AccountUpsertWithWhereUniqueWithoutFromLeadInput!]
+  deleteMany: [AccountScalarWhereInput!]
+  updateMany: [AccountUpdateManyWithWhereNestedInput!]
+}
+
+input AccountUpdateManyWithoutLocationInput {
+  create: [AccountCreateWithoutLocationInput!]
+  delete: [AccountWhereUniqueInput!]
+  connect: [AccountWhereUniqueInput!]
+  set: [AccountWhereUniqueInput!]
+  disconnect: [AccountWhereUniqueInput!]
+  update: [AccountUpdateWithWhereUniqueWithoutLocationInput!]
+  upsert: [AccountUpsertWithWhereUniqueWithoutLocationInput!]
+  deleteMany: [AccountScalarWhereInput!]
+  updateMany: [AccountUpdateManyWithWhereNestedInput!]
+}
+
+input AccountUpdateManyWithWhereNestedInput {
+  where: AccountScalarWhereInput!
+  data: AccountUpdateManyDataInput!
+}
+
+input AccountUpdateWithoutFromLeadDataInput {
+  accountOwner: UserUpdateOneInput
+  acctNum: String
+  contactPrimary: ContactUpdateOneInput
+  contactSecondary: Int
+  leadCreator: UserUpdateOneInput
+  location: LocationUpdateOneWithoutAccountsInput
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountUpdateWithoutLocationDataInput {
+  accountOwner: UserUpdateOneInput
+  acctNum: String
+  contactPrimary: ContactUpdateOneInput
+  contactSecondary: Int
+  fromLead: LeadUpdateOneWithoutAccountsInput
+  leadCreator: UserUpdateOneInput
+  organizationName: String
+  status: String
+  testAcct: Boolean
+  type: String
+}
+
+input AccountUpdateWithWhereUniqueWithoutFromLeadInput {
+  where: AccountWhereUniqueInput!
+  data: AccountUpdateWithoutFromLeadDataInput!
+}
+
+input AccountUpdateWithWhereUniqueWithoutLocationInput {
+  where: AccountWhereUniqueInput!
+  data: AccountUpdateWithoutLocationDataInput!
+}
+
+input AccountUpsertWithWhereUniqueWithoutFromLeadInput {
+  where: AccountWhereUniqueInput!
+  update: AccountUpdateWithoutFromLeadDataInput!
+  create: AccountCreateWithoutFromLeadInput!
+}
+
+input AccountUpsertWithWhereUniqueWithoutLocationInput {
+  where: AccountWhereUniqueInput!
+  update: AccountUpdateWithoutLocationDataInput!
+  create: AccountCreateWithoutLocationInput!
+}
+
+input AccountWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  accountOwner: UserWhereInput
+  acctNum: String
+  acctNum_not: String
+  acctNum_in: [String!]
+  acctNum_not_in: [String!]
+  acctNum_lt: String
+  acctNum_lte: String
+  acctNum_gt: String
+  acctNum_gte: String
+  acctNum_contains: String
+  acctNum_not_contains: String
+  acctNum_starts_with: String
+  acctNum_not_starts_with: String
+  acctNum_ends_with: String
+  acctNum_not_ends_with: String
+  contactPrimary: ContactWhereInput
+  contactSecondary: Int
+  contactSecondary_not: Int
+  contactSecondary_in: [Int!]
+  contactSecondary_not_in: [Int!]
+  contactSecondary_lt: Int
+  contactSecondary_lte: Int
+  contactSecondary_gt: Int
+  contactSecondary_gte: Int
+  fromLead: LeadWhereInput
+  leadCreator: UserWhereInput
+  location: LocationWhereInput
+  organizationName: String
+  organizationName_not: String
+  organizationName_in: [String!]
+  organizationName_not_in: [String!]
+  organizationName_lt: String
+  organizationName_lte: String
+  organizationName_gt: String
+  organizationName_gte: String
+  organizationName_contains: String
+  organizationName_not_contains: String
+  organizationName_starts_with: String
+  organizationName_not_starts_with: String
+  organizationName_ends_with: String
+  organizationName_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  testAcct: Boolean
+  testAcct_not: Boolean
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  AND: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  NOT: [AccountWhereInput!]
+}
+
+input AccountWhereUniqueInput {
+  id: Int
+}
+
+type AggregateAccess {
+  count: Int!
+}
+
+type AggregateAccount {
+  count: Int!
+}
+
+type AggregateCompany {
+  count: Int!
+}
+
+type AggregateContact {
+  count: Int!
+}
+
+type AggregateLead {
+  count: Int!
+}
+
+type AggregateLeadsCampaign {
+  count: Int!
+}
+
+type AggregateLeadsSource {
+  count: Int!
+}
+
+type AggregateLocation {
+  count: Int!
+}
+
+type AggregateOffice {
+  count: Int!
+}
+
+type AggregateRole {
+  count: Int!
+}
+
+type AggregateSalesTeam {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type Company {
+  id: Int!
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]
+}
+
+type CompanyConnection {
+  pageInfo: PageInfo!
+  edges: [CompanyEdge]!
+  aggregate: AggregateCompany!
+}
+
+input CompanyCreateInput {
+  id: Int
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+  users: UserCreateManyWithoutCompanyInput
+}
+
+input CompanyCreateOneWithoutUsersInput {
+  create: CompanyCreateWithoutUsersInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyCreateWithoutUsersInput {
+  id: Int
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+}
+
+type CompanyEdge {
+  node: Company!
+  cursor: String!
+}
+
+enum CompanyOrderByInput {
+  id_ASC
+  id_DESC
+  active_ASC
+  active_DESC
+  companyChild_ASC
+  companyChild_DESC
+  companyParent_ASC
+  companyParent_DESC
+  name_ASC
+  name_DESC
+  testCompany_ASC
+  testCompany_DESC
+}
+
+type CompanyPreviousValues {
+  id: Int!
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+}
+
+type CompanySubscriptionPayload {
+  mutation: MutationType!
+  node: Company
+  updatedFields: [String!]
+  previousValues: CompanyPreviousValues
+}
+
+input CompanySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CompanyWhereInput
+  AND: [CompanySubscriptionWhereInput!]
+  OR: [CompanySubscriptionWhereInput!]
+  NOT: [CompanySubscriptionWhereInput!]
+}
+
+input CompanyUpdateInput {
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+  users: UserUpdateManyWithoutCompanyInput
+}
+
+input CompanyUpdateManyMutationInput {
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+}
+
+input CompanyUpdateOneWithoutUsersInput {
+  create: CompanyCreateWithoutUsersInput
+  update: CompanyUpdateWithoutUsersDataInput
+  upsert: CompanyUpsertWithoutUsersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyUpdateWithoutUsersDataInput {
+  active: Boolean
+  companyChild: String
+  companyParent: String
+  name: String
+  testCompany: Boolean
+}
+
+input CompanyUpsertWithoutUsersInput {
+  update: CompanyUpdateWithoutUsersDataInput!
+  create: CompanyCreateWithoutUsersInput!
+}
+
+input CompanyWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  active: Boolean
+  active_not: Boolean
+  companyChild: String
+  companyChild_not: String
+  companyChild_in: [String!]
+  companyChild_not_in: [String!]
+  companyChild_lt: String
+  companyChild_lte: String
+  companyChild_gt: String
+  companyChild_gte: String
+  companyChild_contains: String
+  companyChild_not_contains: String
+  companyChild_starts_with: String
+  companyChild_not_starts_with: String
+  companyChild_ends_with: String
+  companyChild_not_ends_with: String
+  companyParent: String
+  companyParent_not: String
+  companyParent_in: [String!]
+  companyParent_not_in: [String!]
+  companyParent_lt: String
+  companyParent_lte: String
+  companyParent_gt: String
+  companyParent_gte: String
+  companyParent_contains: String
+  companyParent_not_contains: String
+  companyParent_starts_with: String
+  companyParent_not_starts_with: String
+  companyParent_ends_with: String
+  companyParent_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  testCompany: Boolean
+  testCompany_not: Boolean
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  AND: [CompanyWhereInput!]
+  OR: [CompanyWhereInput!]
+  NOT: [CompanyWhereInput!]
+}
+
+input CompanyWhereUniqueInput {
+  id: Int
+}
+
+type Contact {
+  id: Int!
+  emailOne: String
+  emailTwo: String
+  firstName: String
+  lastName: String
+  otherLocationsIds: String
+  phoneCell: String
+  phoneHome: String
+  primaryLocationId: Int
+  suffix: String
+  testContact: Boolean
+}
+
+type ContactConnection {
+  pageInfo: PageInfo!
+  edges: [ContactEdge]!
+  aggregate: AggregateContact!
+}
+
+input ContactCreateInput {
+  id: Int
+  emailOne: String
+  emailTwo: String
+  firstName: String
+  lastName: String
+  otherLocationsIds: String
+  phoneCell: String
+  phoneHome: String
+  primaryLocationId: Int
+  suffix: String
+  testContact: Boolean
+}
+
+input ContactCreateOneInput {
+  create: ContactCreateInput
+  connect: ContactWhereUniqueInput
+}
+
+type ContactEdge {
+  node: Contact!
+  cursor: String!
+}
+
+enum ContactOrderByInput {
+  id_ASC
+  id_DESC
+  emailOne_ASC
+  emailOne_DESC
+  emailTwo_ASC
+  emailTwo_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+  otherLocationsIds_ASC
+  otherLocationsIds_DESC
+  phoneCell_ASC
+  phoneCell_DESC
+  phoneHome_ASC
+  phoneHome_DESC
+  primaryLocationId_ASC
+  primaryLocationId_DESC
+  suffix_ASC
+  suffix_DESC
+  testContact_ASC
+  testContact_DESC
+}
+
+type ContactPreviousValues {
+  id: Int!
+  emailOne: String
+  emailTwo: String
+  firstName: String
+  lastName: String
+  otherLocationsIds: String
+  phoneCell: String
+  phoneHome: String
+  primaryLocationId: Int
+  suffix: String
+  testContact: Boolean
+}
+
+type ContactSubscriptionPayload {
+  mutation: MutationType!
+  node: Contact
+  updatedFields: [String!]
+  previousValues: ContactPreviousValues
+}
+
+input ContactSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ContactWhereInput
+  AND: [ContactSubscriptionWhereInput!]
+  OR: [ContactSubscriptionWhereInput!]
+  NOT: [ContactSubscriptionWhereInput!]
+}
+
+input ContactUpdateDataInput {
+  emailOne: String
+  emailTwo: String
+  firstName: String
+  lastName: String
+  otherLocationsIds: String
+  phoneCell: String
+  phoneHome: String
+  primaryLocationId: Int
+  suffix: String
+  testContact: Boolean
+}
+
+input ContactUpdateInput {
+  emailOne: String
+  emailTwo: String
+  firstName: String
+  lastName: String
+  otherLocationsIds: String
+  phoneCell: String
+  phoneHome: String
+  primaryLocationId: Int
+  suffix: String
+  testContact: Boolean
+}
+
+input ContactUpdateManyMutationInput {
+  emailOne: String
+  emailTwo: String
+  firstName: String
+  lastName: String
+  otherLocationsIds: String
+  phoneCell: String
+  phoneHome: String
+  primaryLocationId: Int
+  suffix: String
+  testContact: Boolean
+}
+
+input ContactUpdateOneInput {
+  create: ContactCreateInput
+  update: ContactUpdateDataInput
+  upsert: ContactUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ContactWhereUniqueInput
+}
+
+input ContactUpsertNestedInput {
+  update: ContactUpdateDataInput!
+  create: ContactCreateInput!
+}
+
+input ContactWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  emailOne: String
+  emailOne_not: String
+  emailOne_in: [String!]
+  emailOne_not_in: [String!]
+  emailOne_lt: String
+  emailOne_lte: String
+  emailOne_gt: String
+  emailOne_gte: String
+  emailOne_contains: String
+  emailOne_not_contains: String
+  emailOne_starts_with: String
+  emailOne_not_starts_with: String
+  emailOne_ends_with: String
+  emailOne_not_ends_with: String
+  emailTwo: String
+  emailTwo_not: String
+  emailTwo_in: [String!]
+  emailTwo_not_in: [String!]
+  emailTwo_lt: String
+  emailTwo_lte: String
+  emailTwo_gt: String
+  emailTwo_gte: String
+  emailTwo_contains: String
+  emailTwo_not_contains: String
+  emailTwo_starts_with: String
+  emailTwo_not_starts_with: String
+  emailTwo_ends_with: String
+  emailTwo_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  otherLocationsIds: String
+  otherLocationsIds_not: String
+  otherLocationsIds_in: [String!]
+  otherLocationsIds_not_in: [String!]
+  otherLocationsIds_lt: String
+  otherLocationsIds_lte: String
+  otherLocationsIds_gt: String
+  otherLocationsIds_gte: String
+  otherLocationsIds_contains: String
+  otherLocationsIds_not_contains: String
+  otherLocationsIds_starts_with: String
+  otherLocationsIds_not_starts_with: String
+  otherLocationsIds_ends_with: String
+  otherLocationsIds_not_ends_with: String
+  phoneCell: String
+  phoneCell_not: String
+  phoneCell_in: [String!]
+  phoneCell_not_in: [String!]
+  phoneCell_lt: String
+  phoneCell_lte: String
+  phoneCell_gt: String
+  phoneCell_gte: String
+  phoneCell_contains: String
+  phoneCell_not_contains: String
+  phoneCell_starts_with: String
+  phoneCell_not_starts_with: String
+  phoneCell_ends_with: String
+  phoneCell_not_ends_with: String
+  phoneHome: String
+  phoneHome_not: String
+  phoneHome_in: [String!]
+  phoneHome_not_in: [String!]
+  phoneHome_lt: String
+  phoneHome_lte: String
+  phoneHome_gt: String
+  phoneHome_gte: String
+  phoneHome_contains: String
+  phoneHome_not_contains: String
+  phoneHome_starts_with: String
+  phoneHome_not_starts_with: String
+  phoneHome_ends_with: String
+  phoneHome_not_ends_with: String
+  primaryLocationId: Int
+  primaryLocationId_not: Int
+  primaryLocationId_in: [Int!]
+  primaryLocationId_not_in: [Int!]
+  primaryLocationId_lt: Int
+  primaryLocationId_lte: Int
+  primaryLocationId_gt: Int
+  primaryLocationId_gte: Int
+  suffix: String
+  suffix_not: String
+  suffix_in: [String!]
+  suffix_not_in: [String!]
+  suffix_lt: String
+  suffix_lte: String
+  suffix_gt: String
+  suffix_gte: String
+  suffix_contains: String
+  suffix_not_contains: String
+  suffix_starts_with: String
+  suffix_not_starts_with: String
+  suffix_ends_with: String
+  suffix_not_ends_with: String
+  testContact: Boolean
+  testContact_not: Boolean
+  AND: [ContactWhereInput!]
+  OR: [ContactWhereInput!]
+  NOT: [ContactWhereInput!]
+}
+
+input ContactWhereUniqueInput {
+  id: Int
+}
+
+type Lead {
+  id: Int!
+  accounts(
+    where: AccountWhereInput
+    orderBy: AccountOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Account!]
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaign
+  leadCreator: User
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+type LeadConnection {
+  pageInfo: PageInfo!
+  edges: [LeadEdge]!
+  aggregate: AggregateLead!
+}
+
+input LeadCreateInput {
+  id: Int
+  accounts: AccountCreateManyWithoutFromLeadInput
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaignCreateOneWithoutLeadsInput
+  leadCreator: UserCreateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadCreateManyWithoutLeadCampaignInput {
+  create: [LeadCreateWithoutLeadCampaignInput!]
+  connect: [LeadWhereUniqueInput!]
+}
+
+input LeadCreateManyWithoutLeadCreatorInput {
+  create: [LeadCreateWithoutLeadCreatorInput!]
+  connect: [LeadWhereUniqueInput!]
+}
+
+input LeadCreateOneWithoutAccountsInput {
+  create: LeadCreateWithoutAccountsInput
+  connect: LeadWhereUniqueInput
+}
+
+input LeadCreateWithoutAccountsInput {
+  id: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaignCreateOneWithoutLeadsInput
+  leadCreator: UserCreateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadCreateWithoutLeadCampaignInput {
+  id: Int
+  accounts: AccountCreateManyWithoutFromLeadInput
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCreator: UserCreateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadCreateWithoutLeadCreatorInput {
+  id: Int
+  accounts: AccountCreateManyWithoutFromLeadInput
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaignCreateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+type LeadEdge {
+  node: Lead!
+  cursor: String!
+}
+
+enum LeadOrderByInput {
+  id_ASC
+  id_DESC
+  addressOne_ASC
+  addressOne_DESC
+  addressTwo_ASC
+  addressTwo_DESC
+  city_ASC
+  city_DESC
+  email_ASC
+  email_DESC
+  firstName_ASC
+  firstName_DESC
+  gateCode_ASC
+  gateCode_DESC
+  lastName_ASC
+  lastName_DESC
+  leadSourceId_ASC
+  leadSourceId_DESC
+  phoneCell_ASC
+  phoneCell_DESC
+  phoneHome_ASC
+  phoneHome_DESC
+  stage_ASC
+  stage_DESC
+  stateAbbr_ASC
+  stateAbbr_DESC
+  testLead_ASC
+  testLead_DESC
+  zip_ASC
+  zip_DESC
+}
+
+type LeadPreviousValues {
+  id: Int!
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadScalarWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  addressOne: String
+  addressOne_not: String
+  addressOne_in: [String!]
+  addressOne_not_in: [String!]
+  addressOne_lt: String
+  addressOne_lte: String
+  addressOne_gt: String
+  addressOne_gte: String
+  addressOne_contains: String
+  addressOne_not_contains: String
+  addressOne_starts_with: String
+  addressOne_not_starts_with: String
+  addressOne_ends_with: String
+  addressOne_not_ends_with: String
+  addressTwo: String
+  addressTwo_not: String
+  addressTwo_in: [String!]
+  addressTwo_not_in: [String!]
+  addressTwo_lt: String
+  addressTwo_lte: String
+  addressTwo_gt: String
+  addressTwo_gte: String
+  addressTwo_contains: String
+  addressTwo_not_contains: String
+  addressTwo_starts_with: String
+  addressTwo_not_starts_with: String
+  addressTwo_ends_with: String
+  addressTwo_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  gateCode: String
+  gateCode_not: String
+  gateCode_in: [String!]
+  gateCode_not_in: [String!]
+  gateCode_lt: String
+  gateCode_lte: String
+  gateCode_gt: String
+  gateCode_gte: String
+  gateCode_contains: String
+  gateCode_not_contains: String
+  gateCode_starts_with: String
+  gateCode_not_starts_with: String
+  gateCode_ends_with: String
+  gateCode_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  leadSourceId: Int
+  leadSourceId_not: Int
+  leadSourceId_in: [Int!]
+  leadSourceId_not_in: [Int!]
+  leadSourceId_lt: Int
+  leadSourceId_lte: Int
+  leadSourceId_gt: Int
+  leadSourceId_gte: Int
+  phoneCell: String
+  phoneCell_not: String
+  phoneCell_in: [String!]
+  phoneCell_not_in: [String!]
+  phoneCell_lt: String
+  phoneCell_lte: String
+  phoneCell_gt: String
+  phoneCell_gte: String
+  phoneCell_contains: String
+  phoneCell_not_contains: String
+  phoneCell_starts_with: String
+  phoneCell_not_starts_with: String
+  phoneCell_ends_with: String
+  phoneCell_not_ends_with: String
+  phoneHome: String
+  phoneHome_not: String
+  phoneHome_in: [String!]
+  phoneHome_not_in: [String!]
+  phoneHome_lt: String
+  phoneHome_lte: String
+  phoneHome_gt: String
+  phoneHome_gte: String
+  phoneHome_contains: String
+  phoneHome_not_contains: String
+  phoneHome_starts_with: String
+  phoneHome_not_starts_with: String
+  phoneHome_ends_with: String
+  phoneHome_not_ends_with: String
+  stage: String
+  stage_not: String
+  stage_in: [String!]
+  stage_not_in: [String!]
+  stage_lt: String
+  stage_lte: String
+  stage_gt: String
+  stage_gte: String
+  stage_contains: String
+  stage_not_contains: String
+  stage_starts_with: String
+  stage_not_starts_with: String
+  stage_ends_with: String
+  stage_not_ends_with: String
+  stateAbbr: String
+  stateAbbr_not: String
+  stateAbbr_in: [String!]
+  stateAbbr_not_in: [String!]
+  stateAbbr_lt: String
+  stateAbbr_lte: String
+  stateAbbr_gt: String
+  stateAbbr_gte: String
+  stateAbbr_contains: String
+  stateAbbr_not_contains: String
+  stateAbbr_starts_with: String
+  stateAbbr_not_starts_with: String
+  stateAbbr_ends_with: String
+  stateAbbr_not_ends_with: String
+  testLead: Int
+  testLead_not: Int
+  testLead_in: [Int!]
+  testLead_not_in: [Int!]
+  testLead_lt: Int
+  testLead_lte: Int
+  testLead_gt: Int
+  testLead_gte: Int
+  zip: String
+  zip_not: String
+  zip_in: [String!]
+  zip_not_in: [String!]
+  zip_lt: String
+  zip_lte: String
+  zip_gt: String
+  zip_gte: String
+  zip_contains: String
+  zip_not_contains: String
+  zip_starts_with: String
+  zip_not_starts_with: String
+  zip_ends_with: String
+  zip_not_ends_with: String
+  AND: [LeadScalarWhereInput!]
+  OR: [LeadScalarWhereInput!]
+  NOT: [LeadScalarWhereInput!]
+}
+
+type LeadsCampaign {
+  id: Int!
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leads(
+    where: LeadWhereInput
+    orderBy: LeadOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Lead!]
+  leadSource: LeadsSource
+  name: String
+  testLeadCampaign: Boolean
+}
+
+type LeadsCampaignConnection {
+  pageInfo: PageInfo!
+  edges: [LeadsCampaignEdge]!
+  aggregate: AggregateLeadsCampaign!
+}
+
+input LeadsCampaignCreateInput {
+  id: Int
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leads: LeadCreateManyWithoutLeadCampaignInput
+  leadSource: LeadsSourceCreateOneWithoutLeadsCampaignsInput
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignCreateManyWithoutLeadSourceInput {
+  create: [LeadsCampaignCreateWithoutLeadSourceInput!]
+  connect: [LeadsCampaignWhereUniqueInput!]
+}
+
+input LeadsCampaignCreateOneWithoutLeadsInput {
+  create: LeadsCampaignCreateWithoutLeadsInput
+  connect: LeadsCampaignWhereUniqueInput
+}
+
+input LeadsCampaignCreateWithoutLeadsInput {
+  id: Int
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leadSource: LeadsSourceCreateOneWithoutLeadsCampaignsInput
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignCreateWithoutLeadSourceInput {
+  id: Int
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leads: LeadCreateManyWithoutLeadCampaignInput
+  name: String
+  testLeadCampaign: Boolean
+}
+
+type LeadsCampaignEdge {
+  node: LeadsCampaign!
+  cursor: String!
+}
+
+enum LeadsCampaignOrderByInput {
+  id_ASC
+  id_DESC
+  active_ASC
+  active_DESC
+  companyId_ASC
+  companyId_DESC
+  leadDirection_ASC
+  leadDirection_DESC
+  name_ASC
+  name_DESC
+  testLeadCampaign_ASC
+  testLeadCampaign_DESC
+}
+
+type LeadsCampaignPreviousValues {
+  id: Int!
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignScalarWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  active: Boolean
+  active_not: Boolean
+  companyId: Int
+  companyId_not: Int
+  companyId_in: [Int!]
+  companyId_not_in: [Int!]
+  companyId_lt: Int
+  companyId_lte: Int
+  companyId_gt: Int
+  companyId_gte: Int
+  leadDirection: Int
+  leadDirection_not: Int
+  leadDirection_in: [Int!]
+  leadDirection_not_in: [Int!]
+  leadDirection_lt: Int
+  leadDirection_lte: Int
+  leadDirection_gt: Int
+  leadDirection_gte: Int
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  testLeadCampaign: Boolean
+  testLeadCampaign_not: Boolean
+  AND: [LeadsCampaignScalarWhereInput!]
+  OR: [LeadsCampaignScalarWhereInput!]
+  NOT: [LeadsCampaignScalarWhereInput!]
+}
+
+type LeadsCampaignSubscriptionPayload {
+  mutation: MutationType!
+  node: LeadsCampaign
+  updatedFields: [String!]
+  previousValues: LeadsCampaignPreviousValues
+}
+
+input LeadsCampaignSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LeadsCampaignWhereInput
+  AND: [LeadsCampaignSubscriptionWhereInput!]
+  OR: [LeadsCampaignSubscriptionWhereInput!]
+  NOT: [LeadsCampaignSubscriptionWhereInput!]
+}
+
+input LeadsCampaignUpdateInput {
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leads: LeadUpdateManyWithoutLeadCampaignInput
+  leadSource: LeadsSourceUpdateOneWithoutLeadsCampaignsInput
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignUpdateManyDataInput {
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignUpdateManyMutationInput {
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignUpdateManyWithoutLeadSourceInput {
+  create: [LeadsCampaignCreateWithoutLeadSourceInput!]
+  delete: [LeadsCampaignWhereUniqueInput!]
+  connect: [LeadsCampaignWhereUniqueInput!]
+  set: [LeadsCampaignWhereUniqueInput!]
+  disconnect: [LeadsCampaignWhereUniqueInput!]
+  update: [LeadsCampaignUpdateWithWhereUniqueWithoutLeadSourceInput!]
+  upsert: [LeadsCampaignUpsertWithWhereUniqueWithoutLeadSourceInput!]
+  deleteMany: [LeadsCampaignScalarWhereInput!]
+  updateMany: [LeadsCampaignUpdateManyWithWhereNestedInput!]
+}
+
+input LeadsCampaignUpdateManyWithWhereNestedInput {
+  where: LeadsCampaignScalarWhereInput!
+  data: LeadsCampaignUpdateManyDataInput!
+}
+
+input LeadsCampaignUpdateOneWithoutLeadsInput {
+  create: LeadsCampaignCreateWithoutLeadsInput
+  update: LeadsCampaignUpdateWithoutLeadsDataInput
+  upsert: LeadsCampaignUpsertWithoutLeadsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: LeadsCampaignWhereUniqueInput
+}
+
+input LeadsCampaignUpdateWithoutLeadsDataInput {
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leadSource: LeadsSourceUpdateOneWithoutLeadsCampaignsInput
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignUpdateWithoutLeadSourceDataInput {
+  active: Boolean
+  companyId: Int
+  leadDirection: Int
+  leads: LeadUpdateManyWithoutLeadCampaignInput
+  name: String
+  testLeadCampaign: Boolean
+}
+
+input LeadsCampaignUpdateWithWhereUniqueWithoutLeadSourceInput {
+  where: LeadsCampaignWhereUniqueInput!
+  data: LeadsCampaignUpdateWithoutLeadSourceDataInput!
+}
+
+input LeadsCampaignUpsertWithoutLeadsInput {
+  update: LeadsCampaignUpdateWithoutLeadsDataInput!
+  create: LeadsCampaignCreateWithoutLeadsInput!
+}
+
+input LeadsCampaignUpsertWithWhereUniqueWithoutLeadSourceInput {
+  where: LeadsCampaignWhereUniqueInput!
+  update: LeadsCampaignUpdateWithoutLeadSourceDataInput!
+  create: LeadsCampaignCreateWithoutLeadSourceInput!
+}
+
+input LeadsCampaignWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  active: Boolean
+  active_not: Boolean
+  companyId: Int
+  companyId_not: Int
+  companyId_in: [Int!]
+  companyId_not_in: [Int!]
+  companyId_lt: Int
+  companyId_lte: Int
+  companyId_gt: Int
+  companyId_gte: Int
+  leadDirection: Int
+  leadDirection_not: Int
+  leadDirection_in: [Int!]
+  leadDirection_not_in: [Int!]
+  leadDirection_lt: Int
+  leadDirection_lte: Int
+  leadDirection_gt: Int
+  leadDirection_gte: Int
+  leads_every: LeadWhereInput
+  leads_some: LeadWhereInput
+  leads_none: LeadWhereInput
+  leadSource: LeadsSourceWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  testLeadCampaign: Boolean
+  testLeadCampaign_not: Boolean
+  AND: [LeadsCampaignWhereInput!]
+  OR: [LeadsCampaignWhereInput!]
+  NOT: [LeadsCampaignWhereInput!]
+}
+
+input LeadsCampaignWhereUniqueInput {
+  id: Int
+}
+
+type LeadsSource {
+  id: Int!
+  active: Boolean
+  leadsCampaigns(
+    where: LeadsCampaignWhereInput
+    orderBy: LeadsCampaignOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [LeadsCampaign!]
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+type LeadsSourceConnection {
+  pageInfo: PageInfo!
+  edges: [LeadsSourceEdge]!
+  aggregate: AggregateLeadsSource!
+}
+
+input LeadsSourceCreateInput {
+  id: Int
+  active: Boolean
+  leadsCampaigns: LeadsCampaignCreateManyWithoutLeadSourceInput
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+input LeadsSourceCreateOneWithoutLeadsCampaignsInput {
+  create: LeadsSourceCreateWithoutLeadsCampaignsInput
+  connect: LeadsSourceWhereUniqueInput
+}
+
+input LeadsSourceCreateWithoutLeadsCampaignsInput {
+  id: Int
+  active: Boolean
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+type LeadsSourceEdge {
+  node: LeadsSource!
+  cursor: String!
+}
+
+enum LeadsSourceOrderByInput {
+  id_ASC
+  id_DESC
+  active_ASC
+  active_DESC
+  name_ASC
+  name_DESC
+  testLeadSource_ASC
+  testLeadSource_DESC
+  type_ASC
+  type_DESC
+}
+
+type LeadsSourcePreviousValues {
+  id: Int!
+  active: Boolean
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+type LeadsSourceSubscriptionPayload {
+  mutation: MutationType!
+  node: LeadsSource
+  updatedFields: [String!]
+  previousValues: LeadsSourcePreviousValues
+}
+
+input LeadsSourceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LeadsSourceWhereInput
+  AND: [LeadsSourceSubscriptionWhereInput!]
+  OR: [LeadsSourceSubscriptionWhereInput!]
+  NOT: [LeadsSourceSubscriptionWhereInput!]
+}
+
+input LeadsSourceUpdateInput {
+  active: Boolean
+  leadsCampaigns: LeadsCampaignUpdateManyWithoutLeadSourceInput
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+input LeadsSourceUpdateManyMutationInput {
+  active: Boolean
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+input LeadsSourceUpdateOneWithoutLeadsCampaignsInput {
+  create: LeadsSourceCreateWithoutLeadsCampaignsInput
+  update: LeadsSourceUpdateWithoutLeadsCampaignsDataInput
+  upsert: LeadsSourceUpsertWithoutLeadsCampaignsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: LeadsSourceWhereUniqueInput
+}
+
+input LeadsSourceUpdateWithoutLeadsCampaignsDataInput {
+  active: Boolean
+  name: String
+  testLeadSource: Boolean
+  type: String
+}
+
+input LeadsSourceUpsertWithoutLeadsCampaignsInput {
+  update: LeadsSourceUpdateWithoutLeadsCampaignsDataInput!
+  create: LeadsSourceCreateWithoutLeadsCampaignsInput!
+}
+
+input LeadsSourceWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  active: Boolean
+  active_not: Boolean
+  leadsCampaigns_every: LeadsCampaignWhereInput
+  leadsCampaigns_some: LeadsCampaignWhereInput
+  leadsCampaigns_none: LeadsCampaignWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  testLeadSource: Boolean
+  testLeadSource_not: Boolean
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  AND: [LeadsSourceWhereInput!]
+  OR: [LeadsSourceWhereInput!]
+  NOT: [LeadsSourceWhereInput!]
+}
+
+input LeadsSourceWhereUniqueInput {
+  id: Int
+}
+
+type LeadSubscriptionPayload {
+  mutation: MutationType!
+  node: Lead
+  updatedFields: [String!]
+  previousValues: LeadPreviousValues
+}
+
+input LeadSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LeadWhereInput
+  AND: [LeadSubscriptionWhereInput!]
+  OR: [LeadSubscriptionWhereInput!]
+  NOT: [LeadSubscriptionWhereInput!]
+}
+
+input LeadUpdateInput {
+  accounts: AccountUpdateManyWithoutFromLeadInput
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaignUpdateOneWithoutLeadsInput
+  leadCreator: UserUpdateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadUpdateManyDataInput {
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadUpdateManyMutationInput {
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadUpdateManyWithoutLeadCampaignInput {
+  create: [LeadCreateWithoutLeadCampaignInput!]
+  delete: [LeadWhereUniqueInput!]
+  connect: [LeadWhereUniqueInput!]
+  set: [LeadWhereUniqueInput!]
+  disconnect: [LeadWhereUniqueInput!]
+  update: [LeadUpdateWithWhereUniqueWithoutLeadCampaignInput!]
+  upsert: [LeadUpsertWithWhereUniqueWithoutLeadCampaignInput!]
+  deleteMany: [LeadScalarWhereInput!]
+  updateMany: [LeadUpdateManyWithWhereNestedInput!]
+}
+
+input LeadUpdateManyWithoutLeadCreatorInput {
+  create: [LeadCreateWithoutLeadCreatorInput!]
+  delete: [LeadWhereUniqueInput!]
+  connect: [LeadWhereUniqueInput!]
+  set: [LeadWhereUniqueInput!]
+  disconnect: [LeadWhereUniqueInput!]
+  update: [LeadUpdateWithWhereUniqueWithoutLeadCreatorInput!]
+  upsert: [LeadUpsertWithWhereUniqueWithoutLeadCreatorInput!]
+  deleteMany: [LeadScalarWhereInput!]
+  updateMany: [LeadUpdateManyWithWhereNestedInput!]
+}
+
+input LeadUpdateManyWithWhereNestedInput {
+  where: LeadScalarWhereInput!
+  data: LeadUpdateManyDataInput!
+}
+
+input LeadUpdateOneWithoutAccountsInput {
+  create: LeadCreateWithoutAccountsInput
+  update: LeadUpdateWithoutAccountsDataInput
+  upsert: LeadUpsertWithoutAccountsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: LeadWhereUniqueInput
+}
+
+input LeadUpdateWithoutAccountsDataInput {
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaignUpdateOneWithoutLeadsInput
+  leadCreator: UserUpdateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadUpdateWithoutLeadCampaignDataInput {
+  accounts: AccountUpdateManyWithoutFromLeadInput
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCreator: UserUpdateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadUpdateWithoutLeadCreatorDataInput {
+  accounts: AccountUpdateManyWithoutFromLeadInput
+  addressOne: String
+  addressTwo: String
+  city: String
+  email: String
+  firstName: String
+  gateCode: String
+  lastName: String
+  leadCampaign: LeadsCampaignUpdateOneWithoutLeadsInput
+  leadSourceId: Int
+  phoneCell: String
+  phoneHome: String
+  stage: String
+  stateAbbr: String
+  testLead: Int
+  zip: String
+}
+
+input LeadUpdateWithWhereUniqueWithoutLeadCampaignInput {
+  where: LeadWhereUniqueInput!
+  data: LeadUpdateWithoutLeadCampaignDataInput!
+}
+
+input LeadUpdateWithWhereUniqueWithoutLeadCreatorInput {
+  where: LeadWhereUniqueInput!
+  data: LeadUpdateWithoutLeadCreatorDataInput!
+}
+
+input LeadUpsertWithoutAccountsInput {
+  update: LeadUpdateWithoutAccountsDataInput!
+  create: LeadCreateWithoutAccountsInput!
+}
+
+input LeadUpsertWithWhereUniqueWithoutLeadCampaignInput {
+  where: LeadWhereUniqueInput!
+  update: LeadUpdateWithoutLeadCampaignDataInput!
+  create: LeadCreateWithoutLeadCampaignInput!
+}
+
+input LeadUpsertWithWhereUniqueWithoutLeadCreatorInput {
+  where: LeadWhereUniqueInput!
+  update: LeadUpdateWithoutLeadCreatorDataInput!
+  create: LeadCreateWithoutLeadCreatorInput!
+}
+
+input LeadWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  accounts_every: AccountWhereInput
+  accounts_some: AccountWhereInput
+  accounts_none: AccountWhereInput
+  addressOne: String
+  addressOne_not: String
+  addressOne_in: [String!]
+  addressOne_not_in: [String!]
+  addressOne_lt: String
+  addressOne_lte: String
+  addressOne_gt: String
+  addressOne_gte: String
+  addressOne_contains: String
+  addressOne_not_contains: String
+  addressOne_starts_with: String
+  addressOne_not_starts_with: String
+  addressOne_ends_with: String
+  addressOne_not_ends_with: String
+  addressTwo: String
+  addressTwo_not: String
+  addressTwo_in: [String!]
+  addressTwo_not_in: [String!]
+  addressTwo_lt: String
+  addressTwo_lte: String
+  addressTwo_gt: String
+  addressTwo_gte: String
+  addressTwo_contains: String
+  addressTwo_not_contains: String
+  addressTwo_starts_with: String
+  addressTwo_not_starts_with: String
+  addressTwo_ends_with: String
+  addressTwo_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  gateCode: String
+  gateCode_not: String
+  gateCode_in: [String!]
+  gateCode_not_in: [String!]
+  gateCode_lt: String
+  gateCode_lte: String
+  gateCode_gt: String
+  gateCode_gte: String
+  gateCode_contains: String
+  gateCode_not_contains: String
+  gateCode_starts_with: String
+  gateCode_not_starts_with: String
+  gateCode_ends_with: String
+  gateCode_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  leadCampaign: LeadsCampaignWhereInput
+  leadCreator: UserWhereInput
+  leadSourceId: Int
+  leadSourceId_not: Int
+  leadSourceId_in: [Int!]
+  leadSourceId_not_in: [Int!]
+  leadSourceId_lt: Int
+  leadSourceId_lte: Int
+  leadSourceId_gt: Int
+  leadSourceId_gte: Int
+  phoneCell: String
+  phoneCell_not: String
+  phoneCell_in: [String!]
+  phoneCell_not_in: [String!]
+  phoneCell_lt: String
+  phoneCell_lte: String
+  phoneCell_gt: String
+  phoneCell_gte: String
+  phoneCell_contains: String
+  phoneCell_not_contains: String
+  phoneCell_starts_with: String
+  phoneCell_not_starts_with: String
+  phoneCell_ends_with: String
+  phoneCell_not_ends_with: String
+  phoneHome: String
+  phoneHome_not: String
+  phoneHome_in: [String!]
+  phoneHome_not_in: [String!]
+  phoneHome_lt: String
+  phoneHome_lte: String
+  phoneHome_gt: String
+  phoneHome_gte: String
+  phoneHome_contains: String
+  phoneHome_not_contains: String
+  phoneHome_starts_with: String
+  phoneHome_not_starts_with: String
+  phoneHome_ends_with: String
+  phoneHome_not_ends_with: String
+  stage: String
+  stage_not: String
+  stage_in: [String!]
+  stage_not_in: [String!]
+  stage_lt: String
+  stage_lte: String
+  stage_gt: String
+  stage_gte: String
+  stage_contains: String
+  stage_not_contains: String
+  stage_starts_with: String
+  stage_not_starts_with: String
+  stage_ends_with: String
+  stage_not_ends_with: String
+  stateAbbr: String
+  stateAbbr_not: String
+  stateAbbr_in: [String!]
+  stateAbbr_not_in: [String!]
+  stateAbbr_lt: String
+  stateAbbr_lte: String
+  stateAbbr_gt: String
+  stateAbbr_gte: String
+  stateAbbr_contains: String
+  stateAbbr_not_contains: String
+  stateAbbr_starts_with: String
+  stateAbbr_not_starts_with: String
+  stateAbbr_ends_with: String
+  stateAbbr_not_ends_with: String
+  testLead: Int
+  testLead_not: Int
+  testLead_in: [Int!]
+  testLead_not_in: [Int!]
+  testLead_lt: Int
+  testLead_lte: Int
+  testLead_gt: Int
+  testLead_gte: Int
+  zip: String
+  zip_not: String
+  zip_in: [String!]
+  zip_not_in: [String!]
+  zip_lt: String
+  zip_lte: String
+  zip_gt: String
+  zip_gte: String
+  zip_contains: String
+  zip_not_contains: String
+  zip_starts_with: String
+  zip_not_starts_with: String
+  zip_ends_with: String
+  zip_not_ends_with: String
+  AND: [LeadWhereInput!]
+  OR: [LeadWhereInput!]
+  NOT: [LeadWhereInput!]
+}
+
+input LeadWhereUniqueInput {
+  id: Int
+}
+
+type Location {
+  id: Int!
+  accounts(
+    where: AccountWhereInput
+    orderBy: AccountOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Account!]
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+type LocationConnection {
+  pageInfo: PageInfo!
+  edges: [LocationEdge]!
+  aggregate: AggregateLocation!
+}
+
+input LocationCreateInput {
+  id: Int
+  accounts: AccountCreateManyWithoutLocationInput
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+input LocationCreateOneWithoutAccountsInput {
+  create: LocationCreateWithoutAccountsInput
+  connect: LocationWhereUniqueInput
+}
+
+input LocationCreateWithoutAccountsInput {
+  id: Int
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+type LocationEdge {
+  node: Location!
+  cursor: String!
+}
+
+enum LocationOrderByInput {
+  id_ASC
+  id_DESC
+  acctNumId_ASC
+  acctNumId_DESC
+  addressOne_ASC
+  addressOne_DESC
+  addressTwo_ASC
+  addressTwo_DESC
+  city_ASC
+  city_DESC
+  gateCode_ASC
+  gateCode_DESC
+  stateAbbr_ASC
+  stateAbbr_DESC
+  testLocation_ASC
+  testLocation_DESC
+  zip_ASC
+  zip_DESC
+}
+
+type LocationPreviousValues {
+  id: Int!
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+type LocationSubscriptionPayload {
+  mutation: MutationType!
+  node: Location
+  updatedFields: [String!]
+  previousValues: LocationPreviousValues
+}
+
+input LocationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LocationWhereInput
+  AND: [LocationSubscriptionWhereInput!]
+  OR: [LocationSubscriptionWhereInput!]
+  NOT: [LocationSubscriptionWhereInput!]
+}
+
+input LocationUpdateInput {
+  accounts: AccountUpdateManyWithoutLocationInput
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+input LocationUpdateManyMutationInput {
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+input LocationUpdateOneWithoutAccountsInput {
+  create: LocationCreateWithoutAccountsInput
+  update: LocationUpdateWithoutAccountsDataInput
+  upsert: LocationUpsertWithoutAccountsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: LocationWhereUniqueInput
+}
+
+input LocationUpdateWithoutAccountsDataInput {
+  acctNumId: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  gateCode: String
+  stateAbbr: String
+  testLocation: Boolean
+  zip: String
+}
+
+input LocationUpsertWithoutAccountsInput {
+  update: LocationUpdateWithoutAccountsDataInput!
+  create: LocationCreateWithoutAccountsInput!
+}
+
+input LocationWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  accounts_every: AccountWhereInput
+  accounts_some: AccountWhereInput
+  accounts_none: AccountWhereInput
+  acctNumId: Int
+  acctNumId_not: Int
+  acctNumId_in: [Int!]
+  acctNumId_not_in: [Int!]
+  acctNumId_lt: Int
+  acctNumId_lte: Int
+  acctNumId_gt: Int
+  acctNumId_gte: Int
+  addressOne: String
+  addressOne_not: String
+  addressOne_in: [String!]
+  addressOne_not_in: [String!]
+  addressOne_lt: String
+  addressOne_lte: String
+  addressOne_gt: String
+  addressOne_gte: String
+  addressOne_contains: String
+  addressOne_not_contains: String
+  addressOne_starts_with: String
+  addressOne_not_starts_with: String
+  addressOne_ends_with: String
+  addressOne_not_ends_with: String
+  addressTwo: String
+  addressTwo_not: String
+  addressTwo_in: [String!]
+  addressTwo_not_in: [String!]
+  addressTwo_lt: String
+  addressTwo_lte: String
+  addressTwo_gt: String
+  addressTwo_gte: String
+  addressTwo_contains: String
+  addressTwo_not_contains: String
+  addressTwo_starts_with: String
+  addressTwo_not_starts_with: String
+  addressTwo_ends_with: String
+  addressTwo_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  gateCode: String
+  gateCode_not: String
+  gateCode_in: [String!]
+  gateCode_not_in: [String!]
+  gateCode_lt: String
+  gateCode_lte: String
+  gateCode_gt: String
+  gateCode_gte: String
+  gateCode_contains: String
+  gateCode_not_contains: String
+  gateCode_starts_with: String
+  gateCode_not_starts_with: String
+  gateCode_ends_with: String
+  gateCode_not_ends_with: String
+  stateAbbr: String
+  stateAbbr_not: String
+  stateAbbr_in: [String!]
+  stateAbbr_not_in: [String!]
+  stateAbbr_lt: String
+  stateAbbr_lte: String
+  stateAbbr_gt: String
+  stateAbbr_gte: String
+  stateAbbr_contains: String
+  stateAbbr_not_contains: String
+  stateAbbr_starts_with: String
+  stateAbbr_not_starts_with: String
+  stateAbbr_ends_with: String
+  stateAbbr_not_ends_with: String
+  testLocation: Boolean
+  testLocation_not: Boolean
+  zip: String
+  zip_not: String
+  zip_in: [String!]
+  zip_not_in: [String!]
+  zip_lt: String
+  zip_lte: String
+  zip_gt: String
+  zip_gte: String
+  zip_contains: String
+  zip_not_contains: String
+  zip_starts_with: String
+  zip_not_starts_with: String
+  zip_ends_with: String
+  zip_not_ends_with: String
+  AND: [LocationWhereInput!]
+  OR: [LocationWhereInput!]
+  NOT: [LocationWhereInput!]
+}
+
+input LocationWhereUniqueInput {
+  id: Int
+}
+
+scalar Long
+
 type Mutation {
-  createUser(name: String): User!
+  createAccess(data: AccessCreateInput!): Access!
+  updateAccess(data: AccessUpdateInput!, where: AccessWhereUniqueInput!): Access
+  updateManyAccesses(
+    data: AccessUpdateManyMutationInput!
+    where: AccessWhereInput
+  ): BatchPayload!
+  upsertAccess(
+    where: AccessWhereUniqueInput!
+    create: AccessCreateInput!
+    update: AccessUpdateInput!
+  ): Access!
+  deleteAccess(where: AccessWhereUniqueInput!): Access
+  deleteManyAccesses(where: AccessWhereInput): BatchPayload!
+  createAccount(data: AccountCreateInput!): Account!
+  updateAccount(
+    data: AccountUpdateInput!
+    where: AccountWhereUniqueInput!
+  ): Account
+  updateManyAccounts(
+    data: AccountUpdateManyMutationInput!
+    where: AccountWhereInput
+  ): BatchPayload!
+  upsertAccount(
+    where: AccountWhereUniqueInput!
+    create: AccountCreateInput!
+    update: AccountUpdateInput!
+  ): Account!
+  deleteAccount(where: AccountWhereUniqueInput!): Account
+  deleteManyAccounts(where: AccountWhereInput): BatchPayload!
+  createCompany(data: CompanyCreateInput!): Company!
+  updateCompany(
+    data: CompanyUpdateInput!
+    where: CompanyWhereUniqueInput!
+  ): Company
+  updateManyCompanies(
+    data: CompanyUpdateManyMutationInput!
+    where: CompanyWhereInput
+  ): BatchPayload!
+  upsertCompany(
+    where: CompanyWhereUniqueInput!
+    create: CompanyCreateInput!
+    update: CompanyUpdateInput!
+  ): Company!
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  createContact(data: ContactCreateInput!): Contact!
+  updateContact(
+    data: ContactUpdateInput!
+    where: ContactWhereUniqueInput!
+  ): Contact
+  updateManyContacts(
+    data: ContactUpdateManyMutationInput!
+    where: ContactWhereInput
+  ): BatchPayload!
+  upsertContact(
+    where: ContactWhereUniqueInput!
+    create: ContactCreateInput!
+    update: ContactUpdateInput!
+  ): Contact!
+  deleteContact(where: ContactWhereUniqueInput!): Contact
+  deleteManyContacts(where: ContactWhereInput): BatchPayload!
+  createLead(data: LeadCreateInput!): Lead!
+  updateLead(data: LeadUpdateInput!, where: LeadWhereUniqueInput!): Lead
+  updateManyLeads(
+    data: LeadUpdateManyMutationInput!
+    where: LeadWhereInput
+  ): BatchPayload!
+  upsertLead(
+    where: LeadWhereUniqueInput!
+    create: LeadCreateInput!
+    update: LeadUpdateInput!
+  ): Lead!
+  deleteLead(where: LeadWhereUniqueInput!): Lead
+  deleteManyLeads(where: LeadWhereInput): BatchPayload!
+  createLeadsCampaign(data: LeadsCampaignCreateInput!): LeadsCampaign!
+  updateLeadsCampaign(
+    data: LeadsCampaignUpdateInput!
+    where: LeadsCampaignWhereUniqueInput!
+  ): LeadsCampaign
+  updateManyLeadsCampaigns(
+    data: LeadsCampaignUpdateManyMutationInput!
+    where: LeadsCampaignWhereInput
+  ): BatchPayload!
+  upsertLeadsCampaign(
+    where: LeadsCampaignWhereUniqueInput!
+    create: LeadsCampaignCreateInput!
+    update: LeadsCampaignUpdateInput!
+  ): LeadsCampaign!
+  deleteLeadsCampaign(where: LeadsCampaignWhereUniqueInput!): LeadsCampaign
+  deleteManyLeadsCampaigns(where: LeadsCampaignWhereInput): BatchPayload!
+  createLeadsSource(data: LeadsSourceCreateInput!): LeadsSource!
+  updateLeadsSource(
+    data: LeadsSourceUpdateInput!
+    where: LeadsSourceWhereUniqueInput!
+  ): LeadsSource
+  updateManyLeadsSources(
+    data: LeadsSourceUpdateManyMutationInput!
+    where: LeadsSourceWhereInput
+  ): BatchPayload!
+  upsertLeadsSource(
+    where: LeadsSourceWhereUniqueInput!
+    create: LeadsSourceCreateInput!
+    update: LeadsSourceUpdateInput!
+  ): LeadsSource!
+  deleteLeadsSource(where: LeadsSourceWhereUniqueInput!): LeadsSource
+  deleteManyLeadsSources(where: LeadsSourceWhereInput): BatchPayload!
+  createLocation(data: LocationCreateInput!): Location!
+  updateLocation(
+    data: LocationUpdateInput!
+    where: LocationWhereUniqueInput!
+  ): Location
+  updateManyLocations(
+    data: LocationUpdateManyMutationInput!
+    where: LocationWhereInput
+  ): BatchPayload!
+  upsertLocation(
+    where: LocationWhereUniqueInput!
+    create: LocationCreateInput!
+    update: LocationUpdateInput!
+  ): Location!
+  deleteLocation(where: LocationWhereUniqueInput!): Location
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  createOffice(data: OfficeCreateInput!): Office!
+  updateOffice(data: OfficeUpdateInput!, where: OfficeWhereUniqueInput!): Office
+  updateManyOffices(
+    data: OfficeUpdateManyMutationInput!
+    where: OfficeWhereInput
+  ): BatchPayload!
+  upsertOffice(
+    where: OfficeWhereUniqueInput!
+    create: OfficeCreateInput!
+    update: OfficeUpdateInput!
+  ): Office!
+  deleteOffice(where: OfficeWhereUniqueInput!): Office
+  deleteManyOffices(where: OfficeWhereInput): BatchPayload!
+  createRole(data: RoleCreateInput!): Role!
+  updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
+  updateManyRoles(
+    data: RoleUpdateManyMutationInput!
+    where: RoleWhereInput
+  ): BatchPayload!
+  upsertRole(
+    where: RoleWhereUniqueInput!
+    create: RoleCreateInput!
+    update: RoleUpdateInput!
+  ): Role!
+  deleteRole(where: RoleWhereUniqueInput!): Role
+  deleteManyRoles(where: RoleWhereInput): BatchPayload!
+  createSalesTeam(data: SalesTeamCreateInput!): SalesTeam!
+  updateSalesTeam(
+    data: SalesTeamUpdateInput!
+    where: SalesTeamWhereUniqueInput!
+  ): SalesTeam
+  updateManySalesTeams(
+    data: SalesTeamUpdateManyMutationInput!
+    where: SalesTeamWhereInput
+  ): BatchPayload!
+  upsertSalesTeam(
+    where: SalesTeamWhereUniqueInput!
+    create: SalesTeamCreateInput!
+    update: SalesTeamUpdateInput!
+  ): SalesTeam!
+  deleteSalesTeam(where: SalesTeamWhereUniqueInput!): SalesTeam
+  deleteManySalesTeams(where: SalesTeamWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(
+    data: UserUpdateManyMutationInput!
+    where: UserWhereInput
+  ): BatchPayload!
+  upsertUser(
+    where: UserWhereUniqueInput!
+    create: UserCreateInput!
+    update: UserUpdateInput!
+  ): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type Office {
+  id: Int!
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  salesTeams(
+    where: SalesTeamWhereInput
+    orderBy: SalesTeamOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [SalesTeam!]
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+type OfficeConnection {
+  pageInfo: PageInfo!
+  edges: [OfficeEdge]!
+  aggregate: AggregateOffice!
+}
+
+input OfficeCreateInput {
+  id: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  salesTeams: SalesTeamCreateManyWithoutOfficeInput
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+input OfficeCreateOneWithoutSalesTeamsInput {
+  create: OfficeCreateWithoutSalesTeamsInput
+  connect: OfficeWhereUniqueInput
+}
+
+input OfficeCreateWithoutSalesTeamsInput {
+  id: Int
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+type OfficeEdge {
+  node: Office!
+  cursor: String!
+}
+
+enum OfficeOrderByInput {
+  id_ASC
+  id_DESC
+  addressOne_ASC
+  addressOne_DESC
+  addressTwo_ASC
+  addressTwo_DESC
+  city_ASC
+  city_DESC
+  hasWarehouse_ASC
+  hasWarehouse_DESC
+  name_ASC
+  name_DESC
+  stateAbbr_ASC
+  stateAbbr_DESC
+  testOffice_ASC
+  testOffice_DESC
+  zip_ASC
+  zip_DESC
+}
+
+type OfficePreviousValues {
+  id: Int!
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+type OfficeSubscriptionPayload {
+  mutation: MutationType!
+  node: Office
+  updatedFields: [String!]
+  previousValues: OfficePreviousValues
+}
+
+input OfficeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OfficeWhereInput
+  AND: [OfficeSubscriptionWhereInput!]
+  OR: [OfficeSubscriptionWhereInput!]
+  NOT: [OfficeSubscriptionWhereInput!]
+}
+
+input OfficeUpdateInput {
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  salesTeams: SalesTeamUpdateManyWithoutOfficeInput
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+input OfficeUpdateManyMutationInput {
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+input OfficeUpdateOneWithoutSalesTeamsInput {
+  create: OfficeCreateWithoutSalesTeamsInput
+  update: OfficeUpdateWithoutSalesTeamsDataInput
+  upsert: OfficeUpsertWithoutSalesTeamsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: OfficeWhereUniqueInput
+}
+
+input OfficeUpdateWithoutSalesTeamsDataInput {
+  addressOne: String
+  addressTwo: String
+  city: String
+  hasWarehouse: Boolean
+  name: String
+  stateAbbr: String
+  testOffice: Boolean
+  zip: String
+}
+
+input OfficeUpsertWithoutSalesTeamsInput {
+  update: OfficeUpdateWithoutSalesTeamsDataInput!
+  create: OfficeCreateWithoutSalesTeamsInput!
+}
+
+input OfficeWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  addressOne: String
+  addressOne_not: String
+  addressOne_in: [String!]
+  addressOne_not_in: [String!]
+  addressOne_lt: String
+  addressOne_lte: String
+  addressOne_gt: String
+  addressOne_gte: String
+  addressOne_contains: String
+  addressOne_not_contains: String
+  addressOne_starts_with: String
+  addressOne_not_starts_with: String
+  addressOne_ends_with: String
+  addressOne_not_ends_with: String
+  addressTwo: String
+  addressTwo_not: String
+  addressTwo_in: [String!]
+  addressTwo_not_in: [String!]
+  addressTwo_lt: String
+  addressTwo_lte: String
+  addressTwo_gt: String
+  addressTwo_gte: String
+  addressTwo_contains: String
+  addressTwo_not_contains: String
+  addressTwo_starts_with: String
+  addressTwo_not_starts_with: String
+  addressTwo_ends_with: String
+  addressTwo_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  hasWarehouse: Boolean
+  hasWarehouse_not: Boolean
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  salesTeams_every: SalesTeamWhereInput
+  salesTeams_some: SalesTeamWhereInput
+  salesTeams_none: SalesTeamWhereInput
+  stateAbbr: String
+  stateAbbr_not: String
+  stateAbbr_in: [String!]
+  stateAbbr_not_in: [String!]
+  stateAbbr_lt: String
+  stateAbbr_lte: String
+  stateAbbr_gt: String
+  stateAbbr_gte: String
+  stateAbbr_contains: String
+  stateAbbr_not_contains: String
+  stateAbbr_starts_with: String
+  stateAbbr_not_starts_with: String
+  stateAbbr_ends_with: String
+  stateAbbr_not_ends_with: String
+  testOffice: Boolean
+  testOffice_not: Boolean
+  zip: String
+  zip_not: String
+  zip_in: [String!]
+  zip_not_in: [String!]
+  zip_lt: String
+  zip_lte: String
+  zip_gt: String
+  zip_gte: String
+  zip_contains: String
+  zip_not_contains: String
+  zip_starts_with: String
+  zip_not_starts_with: String
+  zip_ends_with: String
+  zip_not_ends_with: String
+  AND: [OfficeWhereInput!]
+  OR: [OfficeWhereInput!]
+  NOT: [OfficeWhereInput!]
+}
+
+input OfficeWhereUniqueInput {
+  id: Int
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Query {
-  users: [User]!
+  hello(name: String): String!
+  users2: [User!]!
+  access(where: AccessWhereUniqueInput!): Access
+  accesses(
+    where: AccessWhereInput
+    orderBy: AccessOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Access]!
+  accessesConnection(
+    where: AccessWhereInput
+    orderBy: AccessOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): AccessConnection!
+  account(where: AccountWhereUniqueInput!): Account
+  accounts(
+    where: AccountWhereInput
+    orderBy: AccountOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Account]!
+  accountsConnection(
+    where: AccountWhereInput
+    orderBy: AccountOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): AccountConnection!
+  company(where: CompanyWhereUniqueInput!): Company
+  companies(
+    where: CompanyWhereInput
+    orderBy: CompanyOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Company]!
+  companiesConnection(
+    where: CompanyWhereInput
+    orderBy: CompanyOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): CompanyConnection!
+  contact(where: ContactWhereUniqueInput!): Contact
+  contacts(
+    where: ContactWhereInput
+    orderBy: ContactOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Contact]!
+  contactsConnection(
+    where: ContactWhereInput
+    orderBy: ContactOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ContactConnection!
+  lead(where: LeadWhereUniqueInput!): Lead
+  leads(
+    where: LeadWhereInput
+    orderBy: LeadOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Lead]!
+  leadsConnection(
+    where: LeadWhereInput
+    orderBy: LeadOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): LeadConnection!
+  leadsCampaign(where: LeadsCampaignWhereUniqueInput!): LeadsCampaign
+  leadsCampaigns(
+    where: LeadsCampaignWhereInput
+    orderBy: LeadsCampaignOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [LeadsCampaign]!
+  leadsCampaignsConnection(
+    where: LeadsCampaignWhereInput
+    orderBy: LeadsCampaignOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): LeadsCampaignConnection!
+  leadsSource(where: LeadsSourceWhereUniqueInput!): LeadsSource
+  leadsSources(
+    where: LeadsSourceWhereInput
+    orderBy: LeadsSourceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [LeadsSource]!
+  leadsSourcesConnection(
+    where: LeadsSourceWhereInput
+    orderBy: LeadsSourceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): LeadsSourceConnection!
+  location(where: LocationWhereUniqueInput!): Location
+  locations(
+    where: LocationWhereInput
+    orderBy: LocationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Location]!
+  locationsConnection(
+    where: LocationWhereInput
+    orderBy: LocationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): LocationConnection!
+  office(where: OfficeWhereUniqueInput!): Office
+  offices(
+    where: OfficeWhereInput
+    orderBy: OfficeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Office]!
+  officesConnection(
+    where: OfficeWhereInput
+    orderBy: OfficeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): OfficeConnection!
+  role(where: RoleWhereUniqueInput!): Role
+  roles(
+    where: RoleWhereInput
+    orderBy: RoleOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Role]!
+  rolesConnection(
+    where: RoleWhereInput
+    orderBy: RoleOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): RoleConnection!
+  salesTeam(where: SalesTeamWhereUniqueInput!): SalesTeam
+  salesTeams(
+    where: SalesTeamWhereInput
+    orderBy: SalesTeamOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [SalesTeam]!
+  salesTeamsConnection(
+    where: SalesTeamWhereInput
+    orderBy: SalesTeamOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): SalesTeamConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User]!
+  usersConnection(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserConnection!
+  node(id: ID!): Node
+}
+
+type Role {
+  id: Int!
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]
+}
+
+type RoleConnection {
+  pageInfo: PageInfo!
+  edges: [RoleEdge]!
+  aggregate: AggregateRole!
+}
+
+input RoleCreateInput {
+  id: Int
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+  users: UserCreateManyWithoutRoleInput
+}
+
+input RoleCreateOneWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput
+  connect: RoleWhereUniqueInput
+}
+
+input RoleCreateWithoutUsersInput {
+  id: Int
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+}
+
+type RoleEdge {
+  node: Role!
+  cursor: String!
+}
+
+enum RoleOrderByInput {
+  id_ASC
+  id_DESC
+  defaultAccess_ASC
+  defaultAccess_DESC
+  name_ASC
+  name_DESC
+  testRole_ASC
+  testRole_DESC
+}
+
+type RolePreviousValues {
+  id: Int!
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+}
+
+type RoleSubscriptionPayload {
+  mutation: MutationType!
+  node: Role
+  updatedFields: [String!]
+  previousValues: RolePreviousValues
+}
+
+input RoleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RoleWhereInput
+  AND: [RoleSubscriptionWhereInput!]
+  OR: [RoleSubscriptionWhereInput!]
+  NOT: [RoleSubscriptionWhereInput!]
+}
+
+input RoleUpdateInput {
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+  users: UserUpdateManyWithoutRoleInput
+}
+
+input RoleUpdateManyMutationInput {
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+}
+
+input RoleUpdateOneWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput
+  update: RoleUpdateWithoutUsersDataInput
+  upsert: RoleUpsertWithoutUsersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: RoleWhereUniqueInput
+}
+
+input RoleUpdateWithoutUsersDataInput {
+  defaultAccess: String
+  name: String
+  testRole: Boolean
+}
+
+input RoleUpsertWithoutUsersInput {
+  update: RoleUpdateWithoutUsersDataInput!
+  create: RoleCreateWithoutUsersInput!
+}
+
+input RoleWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  defaultAccess: String
+  defaultAccess_not: String
+  defaultAccess_in: [String!]
+  defaultAccess_not_in: [String!]
+  defaultAccess_lt: String
+  defaultAccess_lte: String
+  defaultAccess_gt: String
+  defaultAccess_gte: String
+  defaultAccess_contains: String
+  defaultAccess_not_contains: String
+  defaultAccess_starts_with: String
+  defaultAccess_not_starts_with: String
+  defaultAccess_ends_with: String
+  defaultAccess_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  testRole: Boolean
+  testRole_not: Boolean
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  NOT: [RoleWhereInput!]
+}
+
+input RoleWhereUniqueInput {
+  id: Int
+}
+
+type SalesTeam {
+  team_id: Int!
+  active: Boolean
+  name: String
+  office: Office
+  teamChild: Int
+  teamLeadOne: User
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]
+}
+
+type SalesTeamConnection {
+  pageInfo: PageInfo!
+  edges: [SalesTeamEdge]!
+  aggregate: AggregateSalesTeam!
+}
+
+input SalesTeamCreateInput {
+  team_id: Int
+  active: Boolean
+  name: String
+  office: OfficeCreateOneWithoutSalesTeamsInput
+  teamChild: Int
+  teamLeadOne: UserCreateOneWithoutSalesTeamsInput
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users: UserCreateManyWithoutTeamInput
+}
+
+input SalesTeamCreateManyWithoutOfficeInput {
+  create: [SalesTeamCreateWithoutOfficeInput!]
+  connect: [SalesTeamWhereUniqueInput!]
+}
+
+input SalesTeamCreateManyWithoutTeamLeadOneInput {
+  create: [SalesTeamCreateWithoutTeamLeadOneInput!]
+  connect: [SalesTeamWhereUniqueInput!]
+}
+
+input SalesTeamCreateOneWithoutUsersInput {
+  create: SalesTeamCreateWithoutUsersInput
+  connect: SalesTeamWhereUniqueInput
+}
+
+input SalesTeamCreateWithoutOfficeInput {
+  team_id: Int
+  active: Boolean
+  name: String
+  teamChild: Int
+  teamLeadOne: UserCreateOneWithoutSalesTeamsInput
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users: UserCreateManyWithoutTeamInput
+}
+
+input SalesTeamCreateWithoutTeamLeadOneInput {
+  team_id: Int
+  active: Boolean
+  name: String
+  office: OfficeCreateOneWithoutSalesTeamsInput
+  teamChild: Int
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users: UserCreateManyWithoutTeamInput
+}
+
+input SalesTeamCreateWithoutUsersInput {
+  team_id: Int
+  active: Boolean
+  name: String
+  office: OfficeCreateOneWithoutSalesTeamsInput
+  teamChild: Int
+  teamLeadOne: UserCreateOneWithoutSalesTeamsInput
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+}
+
+type SalesTeamEdge {
+  node: SalesTeam!
+  cursor: String!
+}
+
+enum SalesTeamOrderByInput {
+  team_id_ASC
+  team_id_DESC
+  active_ASC
+  active_DESC
+  name_ASC
+  name_DESC
+  teamChild_ASC
+  teamChild_DESC
+  teamLeadTwo_ASC
+  teamLeadTwo_DESC
+  teamParent_ASC
+  teamParent_DESC
+  testSalesTeam_ASC
+  testSalesTeam_DESC
+  type_ASC
+  type_DESC
+}
+
+type SalesTeamPreviousValues {
+  team_id: Int!
+  active: Boolean
+  name: String
+  teamChild: Int
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+}
+
+input SalesTeamScalarWhereInput {
+  team_id: Int
+  team_id_not: Int
+  team_id_in: [Int!]
+  team_id_not_in: [Int!]
+  team_id_lt: Int
+  team_id_lte: Int
+  team_id_gt: Int
+  team_id_gte: Int
+  active: Boolean
+  active_not: Boolean
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  teamChild: Int
+  teamChild_not: Int
+  teamChild_in: [Int!]
+  teamChild_not_in: [Int!]
+  teamChild_lt: Int
+  teamChild_lte: Int
+  teamChild_gt: Int
+  teamChild_gte: Int
+  teamLeadTwo: Int
+  teamLeadTwo_not: Int
+  teamLeadTwo_in: [Int!]
+  teamLeadTwo_not_in: [Int!]
+  teamLeadTwo_lt: Int
+  teamLeadTwo_lte: Int
+  teamLeadTwo_gt: Int
+  teamLeadTwo_gte: Int
+  teamParent: Int
+  teamParent_not: Int
+  teamParent_in: [Int!]
+  teamParent_not_in: [Int!]
+  teamParent_lt: Int
+  teamParent_lte: Int
+  teamParent_gt: Int
+  teamParent_gte: Int
+  testSalesTeam: Boolean
+  testSalesTeam_not: Boolean
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  AND: [SalesTeamScalarWhereInput!]
+  OR: [SalesTeamScalarWhereInput!]
+  NOT: [SalesTeamScalarWhereInput!]
+}
+
+type SalesTeamSubscriptionPayload {
+  mutation: MutationType!
+  node: SalesTeam
+  updatedFields: [String!]
+  previousValues: SalesTeamPreviousValues
+}
+
+input SalesTeamSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SalesTeamWhereInput
+  AND: [SalesTeamSubscriptionWhereInput!]
+  OR: [SalesTeamSubscriptionWhereInput!]
+  NOT: [SalesTeamSubscriptionWhereInput!]
+}
+
+input SalesTeamUpdateInput {
+  active: Boolean
+  name: String
+  office: OfficeUpdateOneWithoutSalesTeamsInput
+  teamChild: Int
+  teamLeadOne: UserUpdateOneWithoutSalesTeamsInput
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users: UserUpdateManyWithoutTeamInput
+}
+
+input SalesTeamUpdateManyDataInput {
+  active: Boolean
+  name: String
+  teamChild: Int
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+}
+
+input SalesTeamUpdateManyMutationInput {
+  active: Boolean
+  name: String
+  teamChild: Int
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+}
+
+input SalesTeamUpdateManyWithoutOfficeInput {
+  create: [SalesTeamCreateWithoutOfficeInput!]
+  delete: [SalesTeamWhereUniqueInput!]
+  connect: [SalesTeamWhereUniqueInput!]
+  set: [SalesTeamWhereUniqueInput!]
+  disconnect: [SalesTeamWhereUniqueInput!]
+  update: [SalesTeamUpdateWithWhereUniqueWithoutOfficeInput!]
+  upsert: [SalesTeamUpsertWithWhereUniqueWithoutOfficeInput!]
+  deleteMany: [SalesTeamScalarWhereInput!]
+  updateMany: [SalesTeamUpdateManyWithWhereNestedInput!]
+}
+
+input SalesTeamUpdateManyWithoutTeamLeadOneInput {
+  create: [SalesTeamCreateWithoutTeamLeadOneInput!]
+  delete: [SalesTeamWhereUniqueInput!]
+  connect: [SalesTeamWhereUniqueInput!]
+  set: [SalesTeamWhereUniqueInput!]
+  disconnect: [SalesTeamWhereUniqueInput!]
+  update: [SalesTeamUpdateWithWhereUniqueWithoutTeamLeadOneInput!]
+  upsert: [SalesTeamUpsertWithWhereUniqueWithoutTeamLeadOneInput!]
+  deleteMany: [SalesTeamScalarWhereInput!]
+  updateMany: [SalesTeamUpdateManyWithWhereNestedInput!]
+}
+
+input SalesTeamUpdateManyWithWhereNestedInput {
+  where: SalesTeamScalarWhereInput!
+  data: SalesTeamUpdateManyDataInput!
+}
+
+input SalesTeamUpdateOneWithoutUsersInput {
+  create: SalesTeamCreateWithoutUsersInput
+  update: SalesTeamUpdateWithoutUsersDataInput
+  upsert: SalesTeamUpsertWithoutUsersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: SalesTeamWhereUniqueInput
+}
+
+input SalesTeamUpdateWithoutOfficeDataInput {
+  active: Boolean
+  name: String
+  teamChild: Int
+  teamLeadOne: UserUpdateOneWithoutSalesTeamsInput
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users: UserUpdateManyWithoutTeamInput
+}
+
+input SalesTeamUpdateWithoutTeamLeadOneDataInput {
+  active: Boolean
+  name: String
+  office: OfficeUpdateOneWithoutSalesTeamsInput
+  teamChild: Int
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+  users: UserUpdateManyWithoutTeamInput
+}
+
+input SalesTeamUpdateWithoutUsersDataInput {
+  active: Boolean
+  name: String
+  office: OfficeUpdateOneWithoutSalesTeamsInput
+  teamChild: Int
+  teamLeadOne: UserUpdateOneWithoutSalesTeamsInput
+  teamLeadTwo: Int
+  teamParent: Int
+  testSalesTeam: Boolean
+  type: String
+}
+
+input SalesTeamUpdateWithWhereUniqueWithoutOfficeInput {
+  where: SalesTeamWhereUniqueInput!
+  data: SalesTeamUpdateWithoutOfficeDataInput!
+}
+
+input SalesTeamUpdateWithWhereUniqueWithoutTeamLeadOneInput {
+  where: SalesTeamWhereUniqueInput!
+  data: SalesTeamUpdateWithoutTeamLeadOneDataInput!
+}
+
+input SalesTeamUpsertWithoutUsersInput {
+  update: SalesTeamUpdateWithoutUsersDataInput!
+  create: SalesTeamCreateWithoutUsersInput!
+}
+
+input SalesTeamUpsertWithWhereUniqueWithoutOfficeInput {
+  where: SalesTeamWhereUniqueInput!
+  update: SalesTeamUpdateWithoutOfficeDataInput!
+  create: SalesTeamCreateWithoutOfficeInput!
+}
+
+input SalesTeamUpsertWithWhereUniqueWithoutTeamLeadOneInput {
+  where: SalesTeamWhereUniqueInput!
+  update: SalesTeamUpdateWithoutTeamLeadOneDataInput!
+  create: SalesTeamCreateWithoutTeamLeadOneInput!
+}
+
+input SalesTeamWhereInput {
+  team_id: Int
+  team_id_not: Int
+  team_id_in: [Int!]
+  team_id_not_in: [Int!]
+  team_id_lt: Int
+  team_id_lte: Int
+  team_id_gt: Int
+  team_id_gte: Int
+  active: Boolean
+  active_not: Boolean
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  office: OfficeWhereInput
+  teamChild: Int
+  teamChild_not: Int
+  teamChild_in: [Int!]
+  teamChild_not_in: [Int!]
+  teamChild_lt: Int
+  teamChild_lte: Int
+  teamChild_gt: Int
+  teamChild_gte: Int
+  teamLeadOne: UserWhereInput
+  teamLeadTwo: Int
+  teamLeadTwo_not: Int
+  teamLeadTwo_in: [Int!]
+  teamLeadTwo_not_in: [Int!]
+  teamLeadTwo_lt: Int
+  teamLeadTwo_lte: Int
+  teamLeadTwo_gt: Int
+  teamLeadTwo_gte: Int
+  teamParent: Int
+  teamParent_not: Int
+  teamParent_in: [Int!]
+  teamParent_not_in: [Int!]
+  teamParent_lt: Int
+  teamParent_lte: Int
+  teamParent_gt: Int
+  teamParent_gte: Int
+  testSalesTeam: Boolean
+  testSalesTeam_not: Boolean
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  AND: [SalesTeamWhereInput!]
+  OR: [SalesTeamWhereInput!]
+  NOT: [SalesTeamWhereInput!]
+}
+
+input SalesTeamWhereUniqueInput {
+  team_id: Int
+}
+
+type Subscription {
+  access(where: AccessSubscriptionWhereInput): AccessSubscriptionPayload
+  account(where: AccountSubscriptionWhereInput): AccountSubscriptionPayload
+  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  contact(where: ContactSubscriptionWhereInput): ContactSubscriptionPayload
+  lead(where: LeadSubscriptionWhereInput): LeadSubscriptionPayload
+  leadsCampaign(
+    where: LeadsCampaignSubscriptionWhereInput
+  ): LeadsCampaignSubscriptionPayload
+  leadsSource(
+    where: LeadsSourceSubscriptionWhereInput
+  ): LeadsSourceSubscriptionPayload
+  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  office(where: OfficeSubscriptionWhereInput): OfficeSubscriptionPayload
+  role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
+  salesTeam(
+    where: SalesTeamSubscriptionWhereInput
+  ): SalesTeamSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User {
+  id: Int!
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: Company
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads(
+    where: LeadWhereInput
+    orderBy: LeadOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Lead!]
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: Role
+  salesTeams(
+    where: SalesTeamWhereInput
+    orderBy: SalesTeamOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [SalesTeam!]
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeam
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: Int
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyCreateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadCreateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleCreateOneWithoutUsersInput
+  salesTeams: SalesTeamCreateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamCreateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserCreateManyWithoutCompanyInput {
+  create: [UserCreateWithoutCompanyInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutRoleInput {
+  create: [UserCreateWithoutRoleInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutTeamInput {
+  create: [UserCreateWithoutTeamInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutLeadsInput {
+  create: UserCreateWithoutLeadsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutSalesTeamsInput {
+  create: UserCreateWithoutSalesTeamsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutCompanyInput {
+  id: Int
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadCreateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleCreateOneWithoutUsersInput
+  salesTeams: SalesTeamCreateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamCreateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserCreateWithoutLeadsInput {
+  id: Int
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyCreateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleCreateOneWithoutUsersInput
+  salesTeams: SalesTeamCreateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamCreateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserCreateWithoutRoleInput {
+  id: Int
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyCreateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadCreateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  salesTeams: SalesTeamCreateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamCreateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserCreateWithoutSalesTeamsInput {
+  id: Int
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyCreateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadCreateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleCreateOneWithoutUsersInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamCreateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserCreateWithoutTeamInput {
+  id: Int
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyCreateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadCreateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleCreateOneWithoutUsersInput
+  salesTeams: SalesTeamCreateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  access_ASC
+  access_DESC
+  addressOne_ASC
+  addressOne_DESC
+  addressTwo_ASC
+  addressTwo_DESC
+  areaId_ASC
+  areaId_DESC
+  city_ASC
+  city_DESC
+  createdBy_ASC
+  createdBy_DESC
+  emailNerd_ASC
+  emailNerd_DESC
+  emailPersonal_ASC
+  emailPersonal_DESC
+  employmentStatus_ASC
+  employmentStatus_DESC
+  entityType_ASC
+  entityType_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+  payrollId_ASC
+  payrollId_DESC
+  phoneCell_ASC
+  phoneCell_DESC
+  phoneCellCarrier_ASC
+  phoneCellCarrier_DESC
+  phoneHome_ASC
+  phoneHome_DESC
+  referredBy_ASC
+  referredBy_DESC
+  securityPin_ASC
+  securityPin_DESC
+  stateAbbr_ASC
+  stateAbbr_DESC
+  suffix_ASC
+  suffix_DESC
+  teamPositionId_ASC
+  teamPositionId_DESC
+  testUser_ASC
+  testUser_DESC
+  thirdPartyIds_ASC
+  thirdPartyIds_DESC
+  zip_ASC
+  zip_DESC
+}
+
+type UserPreviousValues {
+  id: Int!
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserScalarWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  access: String
+  access_not: String
+  access_in: [String!]
+  access_not_in: [String!]
+  access_lt: String
+  access_lte: String
+  access_gt: String
+  access_gte: String
+  access_contains: String
+  access_not_contains: String
+  access_starts_with: String
+  access_not_starts_with: String
+  access_ends_with: String
+  access_not_ends_with: String
+  addressOne: String
+  addressOne_not: String
+  addressOne_in: [String!]
+  addressOne_not_in: [String!]
+  addressOne_lt: String
+  addressOne_lte: String
+  addressOne_gt: String
+  addressOne_gte: String
+  addressOne_contains: String
+  addressOne_not_contains: String
+  addressOne_starts_with: String
+  addressOne_not_starts_with: String
+  addressOne_ends_with: String
+  addressOne_not_ends_with: String
+  addressTwo: String
+  addressTwo_not: String
+  addressTwo_in: [String!]
+  addressTwo_not_in: [String!]
+  addressTwo_lt: String
+  addressTwo_lte: String
+  addressTwo_gt: String
+  addressTwo_gte: String
+  addressTwo_contains: String
+  addressTwo_not_contains: String
+  addressTwo_starts_with: String
+  addressTwo_not_starts_with: String
+  addressTwo_ends_with: String
+  addressTwo_not_ends_with: String
+  areaId: Int
+  areaId_not: Int
+  areaId_in: [Int!]
+  areaId_not_in: [Int!]
+  areaId_lt: Int
+  areaId_lte: Int
+  areaId_gt: Int
+  areaId_gte: Int
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  createdBy: Int
+  createdBy_not: Int
+  createdBy_in: [Int!]
+  createdBy_not_in: [Int!]
+  createdBy_lt: Int
+  createdBy_lte: Int
+  createdBy_gt: Int
+  createdBy_gte: Int
+  emailNerd: String
+  emailNerd_not: String
+  emailNerd_in: [String!]
+  emailNerd_not_in: [String!]
+  emailNerd_lt: String
+  emailNerd_lte: String
+  emailNerd_gt: String
+  emailNerd_gte: String
+  emailNerd_contains: String
+  emailNerd_not_contains: String
+  emailNerd_starts_with: String
+  emailNerd_not_starts_with: String
+  emailNerd_ends_with: String
+  emailNerd_not_ends_with: String
+  emailPersonal: String
+  emailPersonal_not: String
+  emailPersonal_in: [String!]
+  emailPersonal_not_in: [String!]
+  emailPersonal_lt: String
+  emailPersonal_lte: String
+  emailPersonal_gt: String
+  emailPersonal_gte: String
+  emailPersonal_contains: String
+  emailPersonal_not_contains: String
+  emailPersonal_starts_with: String
+  emailPersonal_not_starts_with: String
+  emailPersonal_ends_with: String
+  emailPersonal_not_ends_with: String
+  employmentStatus: Boolean
+  employmentStatus_not: Boolean
+  entityType: String
+  entityType_not: String
+  entityType_in: [String!]
+  entityType_not_in: [String!]
+  entityType_lt: String
+  entityType_lte: String
+  entityType_gt: String
+  entityType_gte: String
+  entityType_contains: String
+  entityType_not_contains: String
+  entityType_starts_with: String
+  entityType_not_starts_with: String
+  entityType_ends_with: String
+  entityType_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  payrollId: Int
+  payrollId_not: Int
+  payrollId_in: [Int!]
+  payrollId_not_in: [Int!]
+  payrollId_lt: Int
+  payrollId_lte: Int
+  payrollId_gt: Int
+  payrollId_gte: Int
+  phoneCell: String
+  phoneCell_not: String
+  phoneCell_in: [String!]
+  phoneCell_not_in: [String!]
+  phoneCell_lt: String
+  phoneCell_lte: String
+  phoneCell_gt: String
+  phoneCell_gte: String
+  phoneCell_contains: String
+  phoneCell_not_contains: String
+  phoneCell_starts_with: String
+  phoneCell_not_starts_with: String
+  phoneCell_ends_with: String
+  phoneCell_not_ends_with: String
+  phoneCellCarrier: String
+  phoneCellCarrier_not: String
+  phoneCellCarrier_in: [String!]
+  phoneCellCarrier_not_in: [String!]
+  phoneCellCarrier_lt: String
+  phoneCellCarrier_lte: String
+  phoneCellCarrier_gt: String
+  phoneCellCarrier_gte: String
+  phoneCellCarrier_contains: String
+  phoneCellCarrier_not_contains: String
+  phoneCellCarrier_starts_with: String
+  phoneCellCarrier_not_starts_with: String
+  phoneCellCarrier_ends_with: String
+  phoneCellCarrier_not_ends_with: String
+  phoneHome: String
+  phoneHome_not: String
+  phoneHome_in: [String!]
+  phoneHome_not_in: [String!]
+  phoneHome_lt: String
+  phoneHome_lte: String
+  phoneHome_gt: String
+  phoneHome_gte: String
+  phoneHome_contains: String
+  phoneHome_not_contains: String
+  phoneHome_starts_with: String
+  phoneHome_not_starts_with: String
+  phoneHome_ends_with: String
+  phoneHome_not_ends_with: String
+  referredBy: Int
+  referredBy_not: Int
+  referredBy_in: [Int!]
+  referredBy_not_in: [Int!]
+  referredBy_lt: Int
+  referredBy_lte: Int
+  referredBy_gt: Int
+  referredBy_gte: Int
+  securityPin: Int
+  securityPin_not: Int
+  securityPin_in: [Int!]
+  securityPin_not_in: [Int!]
+  securityPin_lt: Int
+  securityPin_lte: Int
+  securityPin_gt: Int
+  securityPin_gte: Int
+  stateAbbr: String
+  stateAbbr_not: String
+  stateAbbr_in: [String!]
+  stateAbbr_not_in: [String!]
+  stateAbbr_lt: String
+  stateAbbr_lte: String
+  stateAbbr_gt: String
+  stateAbbr_gte: String
+  stateAbbr_contains: String
+  stateAbbr_not_contains: String
+  stateAbbr_starts_with: String
+  stateAbbr_not_starts_with: String
+  stateAbbr_ends_with: String
+  stateAbbr_not_ends_with: String
+  suffix: String
+  suffix_not: String
+  suffix_in: [String!]
+  suffix_not_in: [String!]
+  suffix_lt: String
+  suffix_lte: String
+  suffix_gt: String
+  suffix_gte: String
+  suffix_contains: String
+  suffix_not_contains: String
+  suffix_starts_with: String
+  suffix_not_starts_with: String
+  suffix_ends_with: String
+  suffix_not_ends_with: String
+  teamPositionId: Int
+  teamPositionId_not: Int
+  teamPositionId_in: [Int!]
+  teamPositionId_not_in: [Int!]
+  teamPositionId_lt: Int
+  teamPositionId_lte: Int
+  teamPositionId_gt: Int
+  teamPositionId_gte: Int
+  testUser: Boolean
+  testUser_not: Boolean
+  thirdPartyIds: String
+  thirdPartyIds_not: String
+  thirdPartyIds_in: [String!]
+  thirdPartyIds_not_in: [String!]
+  thirdPartyIds_lt: String
+  thirdPartyIds_lte: String
+  thirdPartyIds_gt: String
+  thirdPartyIds_gte: String
+  thirdPartyIds_contains: String
+  thirdPartyIds_not_contains: String
+  thirdPartyIds_starts_with: String
+  thirdPartyIds_not_starts_with: String
+  thirdPartyIds_ends_with: String
+  thirdPartyIds_not_ends_with: String
+  zip: String
+  zip_not: String
+  zip_in: [String!]
+  zip_not_in: [String!]
+  zip_lt: String
+  zip_lte: String
+  zip_gt: String
+  zip_gte: String
+  zip_contains: String
+  zip_not_contains: String
+  zip_starts_with: String
+  zip_not_starts_with: String
+  zip_ends_with: String
+  zip_not_ends_with: String
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyUpdateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadUpdateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleUpdateOneWithoutUsersInput
+  salesTeams: SalesTeamUpdateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamUpdateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyUpdateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadUpdateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleUpdateOneWithoutUsersInput
+  salesTeams: SalesTeamUpdateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamUpdateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateManyDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateManyMutationInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateManyWithoutCompanyInput {
+  create: [UserCreateWithoutCompanyInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutCompanyInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutCompanyInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutRoleInput {
+  create: [UserCreateWithoutRoleInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRoleInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRoleInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutTeamInput {
+  create: [UserCreateWithoutTeamInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutTeamInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutTeamInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutLeadsInput {
+  create: UserCreateWithoutLeadsInput
+  update: UserUpdateWithoutLeadsDataInput
+  upsert: UserUpsertWithoutLeadsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutSalesTeamsInput {
+  create: UserCreateWithoutSalesTeamsInput
+  update: UserUpdateWithoutSalesTeamsDataInput
+  upsert: UserUpsertWithoutSalesTeamsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutCompanyDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadUpdateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleUpdateOneWithoutUsersInput
+  salesTeams: SalesTeamUpdateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamUpdateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateWithoutLeadsDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyUpdateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleUpdateOneWithoutUsersInput
+  salesTeams: SalesTeamUpdateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamUpdateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateWithoutRoleDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyUpdateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadUpdateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  salesTeams: SalesTeamUpdateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamUpdateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateWithoutSalesTeamsDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyUpdateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadUpdateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleUpdateOneWithoutUsersInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  team: SalesTeamUpdateOneWithoutUsersInput
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateWithoutTeamDataInput {
+  access: String
+  addressOne: String
+  addressTwo: String
+  areaId: Int
+  city: String
+  company: CompanyUpdateOneWithoutUsersInput
+  createdBy: Int
+  emailNerd: String
+  emailPersonal: String
+  employmentStatus: Boolean
+  entityType: String
+  firstName: String
+  lastName: String
+  leads: LeadUpdateManyWithoutLeadCreatorInput
+  payrollId: Int
+  phoneCell: String
+  phoneCellCarrier: String
+  phoneHome: String
+  referredBy: Int
+  role: RoleUpdateOneWithoutUsersInput
+  salesTeams: SalesTeamUpdateManyWithoutTeamLeadOneInput
+  securityPin: Int
+  stateAbbr: String
+  suffix: String
+  teamPositionId: Int
+  testUser: Boolean
+  thirdPartyIds: String
+  zip: String
+}
+
+input UserUpdateWithWhereUniqueWithoutCompanyInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutCompanyDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutRoleInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutRoleDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutTeamInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutTeamDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutLeadsInput {
+  update: UserUpdateWithoutLeadsDataInput!
+  create: UserCreateWithoutLeadsInput!
+}
+
+input UserUpsertWithoutSalesTeamsInput {
+  update: UserUpdateWithoutSalesTeamsDataInput!
+  create: UserCreateWithoutSalesTeamsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutCompanyInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutCompanyDataInput!
+  create: UserCreateWithoutCompanyInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutRoleInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutRoleDataInput!
+  create: UserCreateWithoutRoleInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutTeamInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutTeamDataInput!
+  create: UserCreateWithoutTeamInput!
+}
+
+input UserWhereInput {
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  access: String
+  access_not: String
+  access_in: [String!]
+  access_not_in: [String!]
+  access_lt: String
+  access_lte: String
+  access_gt: String
+  access_gte: String
+  access_contains: String
+  access_not_contains: String
+  access_starts_with: String
+  access_not_starts_with: String
+  access_ends_with: String
+  access_not_ends_with: String
+  addressOne: String
+  addressOne_not: String
+  addressOne_in: [String!]
+  addressOne_not_in: [String!]
+  addressOne_lt: String
+  addressOne_lte: String
+  addressOne_gt: String
+  addressOne_gte: String
+  addressOne_contains: String
+  addressOne_not_contains: String
+  addressOne_starts_with: String
+  addressOne_not_starts_with: String
+  addressOne_ends_with: String
+  addressOne_not_ends_with: String
+  addressTwo: String
+  addressTwo_not: String
+  addressTwo_in: [String!]
+  addressTwo_not_in: [String!]
+  addressTwo_lt: String
+  addressTwo_lte: String
+  addressTwo_gt: String
+  addressTwo_gte: String
+  addressTwo_contains: String
+  addressTwo_not_contains: String
+  addressTwo_starts_with: String
+  addressTwo_not_starts_with: String
+  addressTwo_ends_with: String
+  addressTwo_not_ends_with: String
+  areaId: Int
+  areaId_not: Int
+  areaId_in: [Int!]
+  areaId_not_in: [Int!]
+  areaId_lt: Int
+  areaId_lte: Int
+  areaId_gt: Int
+  areaId_gte: Int
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  company: CompanyWhereInput
+  createdBy: Int
+  createdBy_not: Int
+  createdBy_in: [Int!]
+  createdBy_not_in: [Int!]
+  createdBy_lt: Int
+  createdBy_lte: Int
+  createdBy_gt: Int
+  createdBy_gte: Int
+  emailNerd: String
+  emailNerd_not: String
+  emailNerd_in: [String!]
+  emailNerd_not_in: [String!]
+  emailNerd_lt: String
+  emailNerd_lte: String
+  emailNerd_gt: String
+  emailNerd_gte: String
+  emailNerd_contains: String
+  emailNerd_not_contains: String
+  emailNerd_starts_with: String
+  emailNerd_not_starts_with: String
+  emailNerd_ends_with: String
+  emailNerd_not_ends_with: String
+  emailPersonal: String
+  emailPersonal_not: String
+  emailPersonal_in: [String!]
+  emailPersonal_not_in: [String!]
+  emailPersonal_lt: String
+  emailPersonal_lte: String
+  emailPersonal_gt: String
+  emailPersonal_gte: String
+  emailPersonal_contains: String
+  emailPersonal_not_contains: String
+  emailPersonal_starts_with: String
+  emailPersonal_not_starts_with: String
+  emailPersonal_ends_with: String
+  emailPersonal_not_ends_with: String
+  employmentStatus: Boolean
+  employmentStatus_not: Boolean
+  entityType: String
+  entityType_not: String
+  entityType_in: [String!]
+  entityType_not_in: [String!]
+  entityType_lt: String
+  entityType_lte: String
+  entityType_gt: String
+  entityType_gte: String
+  entityType_contains: String
+  entityType_not_contains: String
+  entityType_starts_with: String
+  entityType_not_starts_with: String
+  entityType_ends_with: String
+  entityType_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  leads_every: LeadWhereInput
+  leads_some: LeadWhereInput
+  leads_none: LeadWhereInput
+  payrollId: Int
+  payrollId_not: Int
+  payrollId_in: [Int!]
+  payrollId_not_in: [Int!]
+  payrollId_lt: Int
+  payrollId_lte: Int
+  payrollId_gt: Int
+  payrollId_gte: Int
+  phoneCell: String
+  phoneCell_not: String
+  phoneCell_in: [String!]
+  phoneCell_not_in: [String!]
+  phoneCell_lt: String
+  phoneCell_lte: String
+  phoneCell_gt: String
+  phoneCell_gte: String
+  phoneCell_contains: String
+  phoneCell_not_contains: String
+  phoneCell_starts_with: String
+  phoneCell_not_starts_with: String
+  phoneCell_ends_with: String
+  phoneCell_not_ends_with: String
+  phoneCellCarrier: String
+  phoneCellCarrier_not: String
+  phoneCellCarrier_in: [String!]
+  phoneCellCarrier_not_in: [String!]
+  phoneCellCarrier_lt: String
+  phoneCellCarrier_lte: String
+  phoneCellCarrier_gt: String
+  phoneCellCarrier_gte: String
+  phoneCellCarrier_contains: String
+  phoneCellCarrier_not_contains: String
+  phoneCellCarrier_starts_with: String
+  phoneCellCarrier_not_starts_with: String
+  phoneCellCarrier_ends_with: String
+  phoneCellCarrier_not_ends_with: String
+  phoneHome: String
+  phoneHome_not: String
+  phoneHome_in: [String!]
+  phoneHome_not_in: [String!]
+  phoneHome_lt: String
+  phoneHome_lte: String
+  phoneHome_gt: String
+  phoneHome_gte: String
+  phoneHome_contains: String
+  phoneHome_not_contains: String
+  phoneHome_starts_with: String
+  phoneHome_not_starts_with: String
+  phoneHome_ends_with: String
+  phoneHome_not_ends_with: String
+  referredBy: Int
+  referredBy_not: Int
+  referredBy_in: [Int!]
+  referredBy_not_in: [Int!]
+  referredBy_lt: Int
+  referredBy_lte: Int
+  referredBy_gt: Int
+  referredBy_gte: Int
+  role: RoleWhereInput
+  salesTeams_every: SalesTeamWhereInput
+  salesTeams_some: SalesTeamWhereInput
+  salesTeams_none: SalesTeamWhereInput
+  securityPin: Int
+  securityPin_not: Int
+  securityPin_in: [Int!]
+  securityPin_not_in: [Int!]
+  securityPin_lt: Int
+  securityPin_lte: Int
+  securityPin_gt: Int
+  securityPin_gte: Int
+  stateAbbr: String
+  stateAbbr_not: String
+  stateAbbr_in: [String!]
+  stateAbbr_not_in: [String!]
+  stateAbbr_lt: String
+  stateAbbr_lte: String
+  stateAbbr_gt: String
+  stateAbbr_gte: String
+  stateAbbr_contains: String
+  stateAbbr_not_contains: String
+  stateAbbr_starts_with: String
+  stateAbbr_not_starts_with: String
+  stateAbbr_ends_with: String
+  stateAbbr_not_ends_with: String
+  suffix: String
+  suffix_not: String
+  suffix_in: [String!]
+  suffix_not_in: [String!]
+  suffix_lt: String
+  suffix_lte: String
+  suffix_gt: String
+  suffix_gte: String
+  suffix_contains: String
+  suffix_not_contains: String
+  suffix_starts_with: String
+  suffix_not_starts_with: String
+  suffix_ends_with: String
+  suffix_not_ends_with: String
+  team: SalesTeamWhereInput
+  teamPositionId: Int
+  teamPositionId_not: Int
+  teamPositionId_in: [Int!]
+  teamPositionId_not_in: [Int!]
+  teamPositionId_lt: Int
+  teamPositionId_lte: Int
+  teamPositionId_gt: Int
+  teamPositionId_gte: Int
+  testUser: Boolean
+  testUser_not: Boolean
+  thirdPartyIds: String
+  thirdPartyIds_not: String
+  thirdPartyIds_in: [String!]
+  thirdPartyIds_not_in: [String!]
+  thirdPartyIds_lt: String
+  thirdPartyIds_lte: String
+  thirdPartyIds_gt: String
+  thirdPartyIds_gte: String
+  thirdPartyIds_contains: String
+  thirdPartyIds_not_contains: String
+  thirdPartyIds_starts_with: String
+  thirdPartyIds_not_starts_with: String
+  thirdPartyIds_ends_with: String
+  thirdPartyIds_not_ends_with: String
+  zip: String
+  zip_not: String
+  zip_in: [String!]
+  zip_not_in: [String!]
+  zip_lt: String
+  zip_lte: String
+  zip_gt: String
+  zip_gte: String
+  zip_contains: String
+  zip_not_contains: String
+  zip_starts_with: String
+  zip_not_starts_with: String
+  zip_ends_with: String
+  zip_not_ends_with: String
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: Int
 }

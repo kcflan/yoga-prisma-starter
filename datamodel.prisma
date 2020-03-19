@@ -1,5 +1,199 @@
-type User {
-  id: ID! @id
-  name: String!
-  devSkill: String!
+type Access @db(name: "Accesses") {
+  id: Int! @id
+  abbr: String
+  name: String
+  testAccess: Boolean @db(name: "test_access")
+}
+
+type Account @db(name: "Accounts") {
+  id: Int! @id
+  accountOwner: User @db(name: "account_owner_id") @relation(name: "AccountAccountOwnerToUserAccounts")
+  acctNum: String @db(name: "acct_num")
+  contactPrimary: Contact @db(name: "contact_primary") @relation(name: "ContactAccountsToAccountContactPrimary")
+  contactSecondary: Int @db(name: "contact_secondary")
+  fromLead: Lead @db(name: "from_lead_id")
+  leadCreator: User @db(name: "lead_creator_id") @relation(name: "AccountLeadCreatorToUserAccounts")
+  location: Location
+  organizationName: String @db(name: "organization_name")
+  status: String
+  testAcct: Boolean @db(name: "test_acct")
+  type: String
+}
+
+type Company @db(name: "Companies") {
+  id: Int! @id
+  active: Boolean
+  companyChild: String @db(name: "company_child")
+  companyParent: String @db(name: "company_parent")
+  name: String
+  testCompany: Boolean @db(name: "test_company")
+  users: [User]
+}
+
+type Contact @db(name: "Contacts") {
+  id: Int! @id
+  # Field name normalization failed because of a conflicting field name.
+  # Could not auto-generate backwards relation field, field name would be ambiguous.
+  # Please specify the name of this field and the name of the relation manually.
+  # It references Account.contactPrimary.
+  # accounts: [Account] @relation(name: "ContactAccountsToAccountContactPrimary")
+  # Field name normalization failed because of a conflicting field name.
+  # Could not auto-generate backwards relation field, field name would be ambiguous.
+  # Please specify the name of this field and the name of the relation manually.
+  # It references Account.contactPrimary.
+  # accounts: [Account] @relation(name: "ContactAccountsToAccountContactPrimary")
+  emailOne: String @db(name: "email_one")
+  emailTwo: String @db(name: "email_two")
+  firstName: String @db(name: "first_name")
+  lastName: String @db(name: "last_name")
+  otherLocationsIds: String @db(name: "other_locations_ids")
+  phoneCell: String @db(name: "phone_cell")
+  phoneHome: String @db(name: "phone_home")
+  primaryLocationId: Int @db(name: "primary_location_id")
+  suffix: String
+  testContact: Boolean @db(name: "test_contact")
+}
+
+type Lead @db(name: "Leads") {
+  id: Int! @id
+  accounts: [Account]
+  addressOne: String @db(name: "address_one")
+  addressTwo: String @db(name: "address_two")
+  city: String
+  email: String
+  firstName: String @db(name: "first_name")
+  gateCode: String @db(name: "gate_code")
+  lastName: String @db(name: "last_name")
+  # Type point is not supported
+  # latitude: point
+  leadCampaign: LeadsCampaign @db(name: "lead_campaign_id")
+  leadCreator: User @db(name: "lead_creator_id")
+  leadSourceId: Int @db(name: "lead_source_id")
+  # Type point is not supported
+  # longitude: point
+  phoneCell: String @db(name: "phone_cell")
+  phoneHome: String @db(name: "phone_home")
+  stage: String
+  stateAbbr: String @db(name: "state_abbr")
+  testLead: Int @db(name: "test_lead")
+  zip: String
+}
+
+type LeadsCampaign @db(name: "LeadsCampaigns") {
+  id: Int! @id
+  active: Boolean
+  companyId: Int @db(name: "company_id")
+  leadDirection: Int @db(name: "lead_direction")
+  leads: [Lead]
+  leadSource: LeadsSource @db(name: "lead_source_id")
+  name: String
+  testLeadCampaign: Boolean @db(name: "test_lead_campaign")
+}
+
+type LeadsSource @db(name: "LeadsSources") {
+  id: Int! @id
+  active: Boolean
+  leadsCampaigns: [LeadsCampaign]
+  name: String
+  testLeadSource: Boolean @db(name: "test_lead_source")
+  type: String
+}
+
+type Location @db(name: "Locations") {
+  id: Int! @id
+  accounts: [Account]
+  acctNumId: Int @db(name: "acct_num_id")
+  addressOne: String @db(name: "address_one")
+  addressTwo: String @db(name: "address_two")
+  city: String
+  gateCode: String @db(name: "gate_code")
+  # Type point is not supported
+  # latitude: point
+  # Type point is not supported
+  # longitude: point
+  stateAbbr: String @db(name: "state_abbr")
+  testLocation: Boolean @db(name: "test_location")
+  zip: String
+}
+
+type Office @db(name: "Offices") {
+  id: Int! @id
+  addressOne: String @db(name: "address_one")
+  addressTwo: String @db(name: "address_two")
+  city: String
+  hasWarehouse: Boolean @db(name: "has_warehouse")
+  # Type point is not supported
+  # latitude: point
+  # Type point is not supported
+  # longitude: point
+  name: String
+  salesTeams: [SalesTeam]
+  stateAbbr: String @db(name: "state_abbr")
+  testOffice: Boolean @db(name: "test_office")
+  zip: String
+}
+
+type Role @db(name: "Roles") {
+  id: Int! @id
+  defaultAccess: String @db(name: "default_access")
+  name: String
+  testRole: Boolean @db(name: "test_role")
+  users: [User]
+}
+
+type SalesTeam @db(name: "SalesTeams") {
+  team_id: Int! @id
+  active: Boolean
+  name: String
+  office: Office @db(name: "office_id")
+  teamChild: Int @db(name: "team_child")
+  teamLeadOne: User @db(name: "team_lead_one") @relation(name: "SalesTeamTeamLeadOneToUserSalesTeams")
+  teamLeadTwo: Int @db(name: "team_lead_two")
+  teamParent: Int @db(name: "team_parent")
+  testSalesTeam: Boolean @db(name: "test_sales_team")
+  type: String
+  users: [User] @relation(name: "SalesTeamUsersToUserTeam")
+}
+
+type User @db(name: "Users") {
+  id: Int! @id
+  access: String
+  # Field name normalization failed because of a conflicting field name.
+  # Could not auto-generate backwards relation field, field name would be ambiguous.
+  # Please specify the name of this field and the name of the relation manually.
+  # It references Account.accountOwner.
+  # accounts: [Account] @relation(name: "AccountAccountOwnerToUserAccounts")
+  # Field name normalization failed because of a conflicting field name.
+  # Could not auto-generate backwards relation field, field name would be ambiguous.
+  # Please specify the name of this field and the name of the relation manually.
+  # It references Account.leadCreator.
+  # accounts: [Account] @relation(name: "AccountLeadCreatorToUserAccounts")
+  addressOne: String @db(name: "address_one")
+  addressTwo: String @db(name: "address_two")
+  areaId: Int @db(name: "area_id")
+  city: String
+  company: Company @db(name: "company_id")
+  createdBy: Int @db(name: "created_by")
+  emailNerd: String @db(name: "email_nerd")
+  emailPersonal: String @db(name: "email_personal")
+  employmentStatus: Boolean @db(name: "employment_status")
+  entityType: String @db(name: "entity_type")
+  firstName: String @db(name: "first_name")
+  lastName: String @db(name: "last_name")
+  leads: [Lead]
+  payrollId: Int @db(name: "payroll_id")
+  phoneCell: String @db(name: "phone_cell")
+  phoneCellCarrier: String @db(name: "phone_cell_carrier")
+  phoneHome: String @db(name: "phone_home")
+  referredBy: Int @db(name: "referred_by")
+  role: Role @db(name: "role_id")
+  salesTeams: [SalesTeam] @relation(name: "SalesTeamTeamLeadOneToUserSalesTeams")
+  securityPin: Int @db(name: "security_pin")
+  stateAbbr: String @db(name: "state_abbr")
+  suffix: String
+  team: SalesTeam @db(name: "team_id") @relation(name: "SalesTeamUsersToUserTeam")
+  teamPositionId: Int @db(name: "team_position_id")
+  testUser: Boolean @db(name: "test_user")
+  thirdPartyIds: String @db(name: "third_party_ids")
+  zip: String
 }

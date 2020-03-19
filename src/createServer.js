@@ -1,8 +1,9 @@
 const { GraphQLServer } = require("graphql-yoga");
 
 // import the resolvers
-const Mutation = require("./resolvers/Mutations");
-const Query = require("./resolvers/Queries");
+// const Mutation = require("./resolvers/Mutation");
+// const Query = require("./resolvers/Query");
+const resolvers = require("./resolvers");
 
 // grab the db
 const db = require("./db");
@@ -14,10 +15,11 @@ function createServer() {
     // typeDefs: "src/schema.graphql",
     typeDefs: __dirname + "/schema.graphql",
     // the above schema will then be matched with an object with the resolvers in
-    resolvers: {
-      Mutation,
-      Query,
-    },
+    // resolvers: {
+    //   Mutation,
+    //   Query,
+    // },
+    resolvers,
     // stops some error
     resolverValidationOptions: {
       requireResolversForResolveType: false,

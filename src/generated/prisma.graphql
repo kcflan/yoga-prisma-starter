@@ -1,5 +1,5 @@
-# source: http://localhost:4466
-# timestamp: Wed Mar 18 2020 13:04:12 GMT-0700 (Mountain Standard Time)
+# source: https://heroku-endpoint-7f66919b6d.herokuapp.com/scratch/dev
+# timestamp: Wed Mar 18 2020 16:57:32 GMT-0700 (Mountain Standard Time)
 
 type AggregateUser {
   count: Int!

@@ -1,7 +1,7 @@
 // This file connects to the remote prisma DB and gives us the ability to query it with JS
 const { Prisma } = require("prisma-binding");
 
-// THIS ISN'T IN WESBOS - but you will need it to find the endpoint env
+// You will need it to find the endpoint env
 require("dotenv").config();
 
 const db = new Prisma({
