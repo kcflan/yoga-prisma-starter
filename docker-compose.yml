@@ -6,6 +6,7 @@ services:
     ports:
       - "4466:4466"
     environment:
+      - PRISMA_SECRET=${PRISMA_SECRET}
       PRISMA_CONFIG: |
         port: 4466
         databases:
