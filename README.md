@@ -71,7 +71,7 @@ yarn install
 
 1. Create TWO files, `.env.` and `.env.prod` and enter two keys: 
 ```JS
-PRISMA_ENDPOINT=https://your-endpoint
+PRISMA_ENDPOINT=http://localhost:4466 
 PRISMA_SECRET=myPrismaSecret
 ```
 
